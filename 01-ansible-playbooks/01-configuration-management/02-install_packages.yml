@@ -1,0 +1,12 @@
+# Install Packages
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - apache2
+          - mysql-server
+          - php
+        state: present
