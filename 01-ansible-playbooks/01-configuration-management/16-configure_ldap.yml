@@ -1,0 +1,20 @@
+# Configure LDAP Client
+---
+- hosts: ldapclients
+  become: yes
+  tasks:
+    - name: Install LDAP client packages
+      apt:
+        name:
+          - libpam-ldap
+          - nscd
+          - ldap-utils
+        state: present
+    - name: Configure LDAP client
+      template:
+        src: ldap.conf.j2
+        dest: /etc/ldap/ldap.conf
+    - name: Restart nscd service
+      service:
+        name: nscd
+        state: restarted
