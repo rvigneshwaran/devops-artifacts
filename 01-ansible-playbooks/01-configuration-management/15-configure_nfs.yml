@@ -1,0 +1,14 @@
+# Configure NFS Server
+---
+- hosts: nfsservers
+  become: yes
+  tasks:
+    - name: Install NFS server
+      apt:
+        name: nfs-kernel-server
+        state: present
+    - name: Start NFS service
+      service:
+        name: nfs-kernel-server
+        state: started
+        enabled: yes
