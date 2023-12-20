@@ -1,0 +1,14 @@
+#Configure Redis
+---
+- hosts: redisservers
+  become: yes
+  tasks:
+    - name: Install Redis
+      apt:
+        name: redis
+        state: present
+    - name: Start Redis service
+      service:
+        name: redis
+        state: started
+        enabled: yes
