@@ -1,0 +1,14 @@
+# Configure MongoDB
+---
+- hosts: mongodbservers
+  become: yes
+  tasks:
+    - name: Install MongoDB
+      apt:
+        name: mongodb
+        state: present
+    - name: Start MongoDB service
+      service:
+        name: mongodb
+        state: started
+        enabled: yes
