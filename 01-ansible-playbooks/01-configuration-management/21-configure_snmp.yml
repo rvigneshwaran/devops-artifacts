@@ -1,0 +1,18 @@
+# Configure SNMP
+
+---
+- hosts: snmpclients
+  become: yes
+  tasks:
+    - name: Install SNMP
+      apt:
+        name: snmp
+        state: present
+    - name: Configure SNMP
+      template:
+        src: snmpd.conf.j2
+        dest: /etc/snmp/snmpd.conf
+    - name: Restart SNMP service
+      service:
+        name: snmpd
+        state: restarted
