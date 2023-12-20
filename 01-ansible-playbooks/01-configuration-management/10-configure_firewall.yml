@@ -1,0 +1,12 @@
+#  Configure Firewall
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Allow SSH traffic
+      ufw:
+        rule: allow
+        port: 22
+    - name: Enable UFW
+      ufw:
+        state: enabled
