@@ -1,0 +1,17 @@
+# Configure Squid Proxy
+---
+- hosts: proxyservers
+  become: yes
+  tasks:
+    - name: Install Squid
+      apt:
+        name: squid
+        state: present
+    - name: Configure Squid
+      template:
+        src: squid.conf.j2
+        dest: /etc/squid/squid.conf
+    - name: Restart Squid service
+      service:
+        name: squid
+        state: restarted
