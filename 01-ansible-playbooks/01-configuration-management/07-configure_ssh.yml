@@ -1,0 +1,18 @@
+# Configure SSH
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Harden SSH configuration
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '{{ item.regexp }}'
+        line: '{{ item.line }}'
+        state: present
+      with_items:
+        - { regexp: '^PermitRootLogin', line: 'PermitRootLogin no' }
+        - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+    - name: Restart SSH service
+      service:
+        name: sshd
+        state: restarted
