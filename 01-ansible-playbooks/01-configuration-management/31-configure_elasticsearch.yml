@@ -1,0 +1,14 @@
+# Configure Elasticsearch
+---
+- hosts: elasticsearchnodes
+  become: yes
+  tasks:
+    - name: Install Elasticsearch
+      apt:
+        name: elasticsearch
+        state: present
+    - name: Start Elasticsearch service
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
