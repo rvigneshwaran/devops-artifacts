@@ -1,0 +1,12 @@
+# Configure Jenkins Job DSL
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Job DSL plugin
+      jenkins_plugin:
+        name: job-dsl
+        state: present
+    - name: Seed Jenkins jobs using DSL
+      jenkins_script:
+        script: "{{ lookup('template', 'seed_jobs.groovy.j2') }}"
