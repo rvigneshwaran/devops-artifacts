@@ -1,0 +1,17 @@
+# Configure Apache Virtual Host
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Create Apache virtual host
+      template:
+        src: apache_virtual_host.conf.j2
+        dest: /etc/apache2/sites-available/my_site.conf
+    - name: Enable virtual host
+      apache2_module:
+        state: present
+        name: rewrite
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
