@@ -1,0 +1,10 @@
+# Configure Logrotate
+
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure logrotate
+      template:
+        src: logrotate.conf.j2
+        dest: /etc/logrotate.conf
