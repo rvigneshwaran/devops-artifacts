@@ -1,0 +1,14 @@
+# Configure Git Server
+
+---
+- hosts: gitserver
+  become: yes
+  tasks:
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+    - name: Configure Git
+      template:
+        src: gitconfig.j2
+        dest: /etc/gitconfig
