@@ -1,0 +1,12 @@
+# Configure Jenkins Plugin
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Jenkins plugin
+      jenkins_plugin:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - git
+        - docker
