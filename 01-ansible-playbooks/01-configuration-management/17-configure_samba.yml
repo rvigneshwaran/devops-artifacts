@@ -1,0 +1,18 @@
+# Configure Samba Server
+
+---
+- hosts: sambaservers
+  become: yes
+  tasks:
+    - name: Install Samba
+      apt:
+        name: samba
+        state: present
+    - name: Configure Samba
+      template:
+        src: smb.conf.j2
+        dest: /etc/samba/smb.conf
+    - name: Restart Samba service
+      service:
+        name: smbd
+        state: restarted
