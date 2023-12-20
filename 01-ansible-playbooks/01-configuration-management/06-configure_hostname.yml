@@ -1,0 +1,13 @@
+# Configure Hostname
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Set hostname
+      hostname:
+        name: WebServer1
+      become: yes
+    - name: Update /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "127.0.1.1 WebServer1"
