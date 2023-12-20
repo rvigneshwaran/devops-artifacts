@@ -1,0 +1,14 @@
+# Configure NTP
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Set up NTP
+      apt:
+        name: ntp
+        state: present
+    - name: Configure NTP servers
+      systemd:
+        name: ntp
+        enabled: yes
+        state: started
