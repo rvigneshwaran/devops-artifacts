@@ -1,0 +1,26 @@
+# Configure Monitoring (Prometheus)
+---
+- hosts: monitoring
+  become: yes
+  tasks:
+    - name: Download Prometheus
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz"
+        dest: "/tmp/prometheus.tar.gz"
+    - name: Extract Prometheus
+      ansible.builtin.unarchive:
+        src: "/tmp/prometheus.tar.gz"
+        dest: "/opt/"
+    - name: Create Prometheus data directory
+      file:
+        path: "/opt/prometheus/data"
+        state: directory
+    - name: Create Prometheus configuration
+      copy:
+        content: "{{ lookup('template', 'prometheus.yml.j2') }}"
+        dest: "/opt/prometheus/prometheus.yml"
+    - name: Start Prometheus service
+      systemd:
+        name: prometheus
+        enabled: yes
+        state: started
