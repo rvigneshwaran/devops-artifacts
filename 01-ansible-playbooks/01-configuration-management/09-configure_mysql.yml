@@ -1,0 +1,14 @@
+# Configure MySQL Database
+---
+- hosts: dbservers
+  become: yes
+  tasks:
+    - name: Install MySQL server
+      package:
+        name: mysql-server
+        state: present
+    - name: Start MySQL service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
