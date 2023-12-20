@@ -1,0 +1,9 @@
+# Update System Packages:
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Update system packages
+      apt:
+        update_cache: yes
+        upgrade: dist
