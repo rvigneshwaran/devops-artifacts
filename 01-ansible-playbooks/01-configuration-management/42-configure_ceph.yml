@@ -1,0 +1,14 @@
+# Configure Ceph
+---
+- hosts: cephnodes
+  become: yes
+  tasks:
+    - name: Install Ceph
+      apt:
+        name: ceph
+        state: present
+    - name: Start Ceph services
+      service:
+        name: ceph
+        state: started
+        enabled: yes
