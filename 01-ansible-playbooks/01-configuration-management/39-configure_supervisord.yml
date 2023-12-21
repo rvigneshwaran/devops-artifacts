@@ -1,0 +1,14 @@
+# Configure Supervisord
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Supervisord
+      apt:
+        name: supervisor
+        state: present
+    - name: Start Supervisord service
+      service:
+        name: supervisor
+        state: started
+        enabled: yes
