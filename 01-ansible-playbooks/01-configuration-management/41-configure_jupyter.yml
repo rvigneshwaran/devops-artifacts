@@ -1,0 +1,14 @@
+# Configure Jupyter Notebook
+---
+- hosts: jupyterservers
+  become: yes
+  tasks:
+    - name: Install Jupyter Notebook
+      apt:
+        name: jupyter-notebook
+        state: present
+    - name: Start Jupyter Notebook service
+      service:
+        name: jupyter-notebook
+        state: started
+        enabled: yes
