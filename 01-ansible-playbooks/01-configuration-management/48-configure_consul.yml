@@ -1,0 +1,14 @@
+# Configure Consul
+---
+- hosts: consulservers
+  become: yes
+  tasks:
+    - name: Install Consul
+      apt:
+        name: consul
+        state: present
+    - name: Start Consul service
+      service:
+        name: consul
+        state: started
+        enabled: yes
