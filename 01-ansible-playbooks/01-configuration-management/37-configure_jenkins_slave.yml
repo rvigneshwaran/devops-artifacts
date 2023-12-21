@@ -1,0 +1,12 @@
+# Configure Jenkins Slave Node
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins slave node
+      jenkins_node:
+        name: slave-node
+        master: http://jenkins-master:8080
+        secret: "{{ lookup('env', 'JENKINS_SLAVE_SECRET') }}"
+        launcher: jnlp
+        state: present
