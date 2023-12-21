@@ -1,0 +1,13 @@
+# Configure Jenkins Multibranch Pipeline
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins multibranch pipeline
+      jenkins_job:
+        config: "{{ lookup('template', 'multibranch_pipeline.xml.j2') }}"
+        name: my_multibranch_pipeline
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
