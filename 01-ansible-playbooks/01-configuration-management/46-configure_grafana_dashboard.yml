@@ -1,0 +1,14 @@
+# Configure Grafana Dashboard
+---
+- hosts: grafanaservers
+  become: yes
+  tasks:
+    - name: Import Grafana dashboard
+      grafana_dashboard:
+        org_id: 1
+        dashboard:
+          folder: ''
+          name: 'My Dashboard'
+          type: file
+          disable_sanitize: true
+        src: /path/to/dashboard.json
