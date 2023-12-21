@@ -1,0 +1,9 @@
+# Configure Jenkins Shared Libraries
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Jenkins Shared Libraries
+      jenkins_plugin:
+        name: workflow-cps-global-lib
+        state: present
