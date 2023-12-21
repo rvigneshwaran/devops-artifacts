@@ -1,0 +1,14 @@
+# Configure Apache Tomcat
+---
+- hosts: tomcatservers
+  become: yes
+  tasks:
+    - name: Install Apache Tomcat
+      apt:
+        name: tomcat
+        state: present
+    - name: Start Tomcat service
+      service:
+        name: tomcat
+        state: started
+        enabled: yes
