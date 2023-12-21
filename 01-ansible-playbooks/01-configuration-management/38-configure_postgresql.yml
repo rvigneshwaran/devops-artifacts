@@ -1,0 +1,14 @@
+# Configure PostgreSQL
+---
+- hosts: postgresqlservers
+  become: yes
+  tasks:
+    - name: Install PostgreSQL
+      apt:
+        name: postgresql
+        state: present
+    - name: Start PostgreSQL service
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
