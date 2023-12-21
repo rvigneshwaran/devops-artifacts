@@ -1,0 +1,13 @@
+# Configure Jenkins Declarative Pipeline
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins declarative pipeline
+      jenkins_pipeline:
+        name: my_declarative_pipeline
+        state: present
+        config: "{{ lookup('template', 'declarative_pipeline.groovy.j2') }}"
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
