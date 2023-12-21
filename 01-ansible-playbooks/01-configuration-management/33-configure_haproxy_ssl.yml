@@ -1,0 +1,17 @@
+# Configure HAProxy with SSL
+---
+- hosts: haproxyservers
+  become: yes
+  tasks:
+    - name: Install HAProxy
+      apt:
+        name: haproxy
+        state: present
+    - name: Configure HAProxy with SSL
+      template:
+        src: haproxy_ssl.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+    - name: Restart HAProxy service
+      service:
+        name: haproxy
+        state: restarted
