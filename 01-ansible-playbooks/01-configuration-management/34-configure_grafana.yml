@@ -1,0 +1,14 @@
+#  Configure Grafana
+---
+- hosts: grafanaservers
+  become: yes
+  tasks:
+    - name: Install Grafana
+      apt:
+        name: grafana
+        state: present
+    - name: Start Grafana service
+      service:
+        name: grafana
+        state: started
+        enabled: yes
