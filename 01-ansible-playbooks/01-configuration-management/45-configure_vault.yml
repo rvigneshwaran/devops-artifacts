@@ -1,0 +1,14 @@
+# Configure Vault for Secrets Management
+---
+- hosts: vaultservers
+  become: yes
+  tasks:
+    - name: Install HashiCorp Vault
+      apt:
+        name: vault
+        state: present
+    - name: Start Vault service
+      service:
+        name: vault
+        state: started
+        enabled: yes
