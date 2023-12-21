@@ -1,0 +1,12 @@
+#Configure Jira Integration
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Jira integration plugin
+      jenkins_plugin:
+        name: jira
+        state: present
+    - name: Configure Jira connection
+      jenkins_script:
+        script: "{{ lookup('template', 'jira_configuration.groovy.j2') }}"
