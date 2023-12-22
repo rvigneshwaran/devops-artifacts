@@ -1,0 +1,12 @@
+# Configure Jenkins GitHub Integration
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install GitHub plugin
+      jenkins_plugin:
+        name: github
+        state: present
+    - name: Configure GitHub Integration
+      jenkins_script:
+        script: "{{ lookup('template', 'github_integration.groovy.j2') }}"
