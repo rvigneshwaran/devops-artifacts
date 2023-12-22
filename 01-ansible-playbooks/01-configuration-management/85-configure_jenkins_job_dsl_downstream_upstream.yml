@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL Downstream/Upstream Projects
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL job with downstream/upstream projects
+      jenkins_job:
+        config: "{{ lookup('template', 'downstream_upstream_job.xml.j2') }}"
+        name: downstream_upstream_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
