@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL with Ant Build
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL job with Ant build
+      jenkins_job:
+        config: "{{ lookup('template', 'ant_build_job.xml.j2') }}"
+        name: ant_build_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
