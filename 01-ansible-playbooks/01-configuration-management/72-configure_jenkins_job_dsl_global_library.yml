@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL Global Library
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL global library
+      jenkins_job:
+        config: "{{ lookup('template', 'global_library.xml.j2') }}"
+        name: global_library
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
