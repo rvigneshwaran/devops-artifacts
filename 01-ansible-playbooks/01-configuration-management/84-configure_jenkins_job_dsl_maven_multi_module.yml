@@ -1,0 +1,13 @@
+#Configure Jenkins Job DSL Maven Multi-Module Project
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL Maven multi-module project
+      jenkins_job:
+        config: "{{ lookup('template', 'maven_multi_module_job.xml.j2') }}"
+        name: maven_multi_module_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
