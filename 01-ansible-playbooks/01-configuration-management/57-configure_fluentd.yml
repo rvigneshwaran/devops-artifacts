@@ -1,0 +1,17 @@
+# Configure Fluentd for Log Shipping
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Fluentd
+      apt:
+        name: td-agent
+        state: present
+    - name: Configure Fluentd
+      template:
+        src: fluentd.conf.j2
+        dest: /etc/td-agent/td-agent.conf
+    - name: Restart Fluentd service
+      service:
+        name: td-agent
+        state: restarted
