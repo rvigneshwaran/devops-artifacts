@@ -1,0 +1,8 @@
+# Configure Jenkins Node Label
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Configure Jenkins Node Label
+      jenkins_script:
+        script: "{{ lookup('template', 'node_label.groovy.j2') }}"
