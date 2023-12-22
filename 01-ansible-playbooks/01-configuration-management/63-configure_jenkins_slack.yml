@@ -1,0 +1,12 @@
+# Configure Jenkins Slack Integration
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Slack Notification plugin
+      jenkins_plugin:
+        name: slack
+        state: present
+    - name: Configure Slack Integration
+      jenkins_script:
+        script: "{{ lookup('template', 'slack_integration.groovy.j2') }}"
