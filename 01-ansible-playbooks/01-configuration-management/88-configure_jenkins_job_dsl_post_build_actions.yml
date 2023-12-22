@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL Post-Build Actions
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL job with post-build actions
+      jenkins_job:
+        config: "{{ lookup('template', 'post_build_actions_job.xml.j2') }}"
+        name: post_build_actions_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
