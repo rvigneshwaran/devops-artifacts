@@ -1,0 +1,12 @@
+# Configure Jenkins Email Notification
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Email Extension plugin
+      jenkins_plugin:
+        name: email-ext
+        state: present
+    - name: Configure Email Notification
+      jenkins_script:
+        script: "{{ lookup('template', 'email_notification.groovy.j2') }}"
