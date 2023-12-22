@@ -1,0 +1,14 @@
+# Configure Kibana
+---
+- hosts: kibanaservers
+  become: yes
+  tasks:
+    - name: Install Kibana
+      apt:
+        name: kibana
+        state: present
+    - name: Start Kibana service
+      service:
+        name: kibana
+        state: started
+        enabled: yes
