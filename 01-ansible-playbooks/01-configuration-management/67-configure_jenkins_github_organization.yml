@@ -1,0 +1,12 @@
+# Configure Jenkins GitHub Organization
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install GitHub Organization plugin
+      jenkins_plugin:
+        name: github-organization-folder
+        state: present
+    - name: Configure GitHub Organization
+      jenkins_script:
+        script: "{{ lookup('template', 'github_organization.groovy.j2') }}"
