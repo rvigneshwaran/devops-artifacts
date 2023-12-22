@@ -1,0 +1,13 @@
+# Configure Jenkins Backup Job
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins backup job
+      jenkins_job:
+        config: "{{ lookup('template', 'backup_job.xml.j2') }}"
+        name: backup_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
