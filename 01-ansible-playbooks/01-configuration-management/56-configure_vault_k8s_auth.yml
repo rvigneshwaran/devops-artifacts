@@ -1,0 +1,9 @@
+# Configure Vault Kubernetes Authentication
+---
+- hosts: vaultservers
+  become: yes
+  tasks:
+    - name: Enable Kubernetes authentication
+      shell: "vault auth enable kubernetes"
+    - name: Configure Kubernetes authentication
+      shell: "vault write auth/kubernetes/config token_reviewer_jwt='{{ token_reviewer_jwt }}' kubernetes_host='{{ kubernetes_host }}' kubernetes_ca_cert='{{ kubernetes_ca_cert }}'"
