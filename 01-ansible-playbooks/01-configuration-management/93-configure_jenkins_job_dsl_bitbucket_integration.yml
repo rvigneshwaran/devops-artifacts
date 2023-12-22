@@ -1,0 +1,12 @@
+# Configure Jenkins Job DSL Bitbucket Integration
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Bitbucket plugin
+      jenkins_plugin:
+        name: bitbucket
+        state: present
+    - name: Configure Bitbucket Integration
+      jenkins_script:
+        script: "{{ lookup('template', 'bitbucket_integration.groovy.j2') }}"
