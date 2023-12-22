@@ -1,0 +1,9 @@
+# Configure Vault AppRole Authentication
+---
+- hosts: vaultservers
+  become: yes
+  tasks:
+    - name: Enable AppRole authentication
+      shell: "vault auth enable approle"
+    - name: Create AppRole
+      shell: "vault write auth/approle/role/myapp policies=myapp-policy"
