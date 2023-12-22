@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL Remote Trigger
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL job with remote trigger
+      jenkins_job:
+        config: "{{ lookup('template', 'remote_trigger_job.xml.j2') }}"
+        name: remote_trigger_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
