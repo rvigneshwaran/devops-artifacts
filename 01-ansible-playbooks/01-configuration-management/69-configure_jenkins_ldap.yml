@@ -1,0 +1,12 @@
+# Configure Jenkins LDAP Authentication
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install LDAP plugin
+      jenkins_plugin:
+        name: ldap
+        state: present
+    - name: Configure LDAP Authentication
+      jenkins_script:
+        script: "{{ lookup('template', 'ldap_authentication.groovy.j2') }}"
