@@ -1,0 +1,8 @@
+# Configure Jenkins Job DSL Script Approval
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL script approval
+      jenkins_script:
+        script: "jenkins.model.Jenkins.instance.getScriptApproval().approveSignature('method java.lang.ProcessBuilder start')")
