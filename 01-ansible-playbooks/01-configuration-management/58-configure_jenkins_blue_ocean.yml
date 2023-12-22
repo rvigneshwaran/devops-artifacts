@@ -1,0 +1,12 @@
+# Configure Jenkins Blue Ocean
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Jenkins Blue Ocean plugin
+      jenkins_plugin:
+        name: blueocean
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
