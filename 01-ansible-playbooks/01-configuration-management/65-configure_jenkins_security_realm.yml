@@ -1,0 +1,8 @@
+# Configure Jenkins Security Realm
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Configure Jenkins Security Realm
+      jenkins_script:
+        script: "{{ lookup('template', 'security_realm.groovy.j2') }}"
