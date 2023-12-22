@@ -1,0 +1,12 @@
+# Configure Jenkins Artifactory Integration
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Artifactory plugin
+      jenkins_plugin:
+        name: artifactory
+        state: present
+    - name: Configure Artifactory Integration
+      jenkins_script:
+        script: "{{ lookup('template', 'artifactory_integration.groovy.j2') }}"
