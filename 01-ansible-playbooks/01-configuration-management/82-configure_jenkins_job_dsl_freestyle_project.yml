@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL Freestyle Project
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL freestyle project
+      jenkins_job:
+        config: "{{ lookup('template', 'freestyle_project_job.xml.j2') }}"
+        name: freestyle_project_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
