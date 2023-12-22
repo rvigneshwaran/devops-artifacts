@@ -1,0 +1,13 @@
+# Configure Prometheus Alert Rules
+---
+- hosts: prometheus
+  become: yes
+  tasks:
+    - name: Configure Prometheus alert rules
+      template:
+        src: prometheus_alert_rules.yml.j2
+        dest: /etc/prometheus/alert.rules.yml
+    - name: Reload Prometheus configuration
+      systemd:
+        name: prometheus
+        state: reloaded
