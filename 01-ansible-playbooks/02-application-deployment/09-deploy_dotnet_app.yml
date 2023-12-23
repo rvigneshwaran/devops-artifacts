@@ -1,0 +1,11 @@
+# Deploy a .NET Core Application
+---
+- hosts: dotnet_servers
+  become: yes
+  tasks:
+    - name: Install .NET Core runtime
+      apt:
+        name: dotnet-runtime-3.1
+        state: present
+    - name: Copy and run .NET Core application
+      command: dotnet /path/to/local/dotnet/app/app.dll
