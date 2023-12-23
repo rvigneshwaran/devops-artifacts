@@ -1,0 +1,13 @@
+# Deploy a TensorFlow Serving Model
+---
+- hosts: tensorflow_servers
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+    - name: Pull TensorFlow Serving Docker image
+      command: docker pull tensorflow/serving
+    - name: Run TensorFlow Serving container
+      command: docker run -p 8501:8501 --name=tf_serving --mount type=bind,source=/path/to/models,target=/models/tf_serving -e MODEL_NAME=tf_serving -t tensorflow/serving
