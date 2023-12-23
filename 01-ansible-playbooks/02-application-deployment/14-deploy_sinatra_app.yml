@@ -1,0 +1,23 @@
+# Deploy a Ruby Sinatra Application
+---
+- hosts: ruby_servers
+  become: yes
+  tasks:
+    - name: Install Ruby and Sinatra gem
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - ruby
+        - ruby-dev
+        - gem
+    - name: Copy and install Sinatra application
+      gem:
+        name: sinatra
+        state: present
+    - name: Copy Sinatra application files
+      copy:
+        src: /path/to/local/sinatra/app
+        dest: /opt/sinatra/apps
+    - name: Start the Sinatra application
+      command: ruby /opt/sinatra/apps/app.rb
