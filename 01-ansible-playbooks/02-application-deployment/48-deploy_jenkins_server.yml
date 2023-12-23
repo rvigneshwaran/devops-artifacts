@@ -1,0 +1,16 @@
+# Deploy a Jenkins CI/CD Server
+---
+- hosts: ci_cd_servers
+  become: yes
+  tasks:
+    - name: Install Java and Jenkins
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - openjdk-11-jdk
+        - jenkins
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
