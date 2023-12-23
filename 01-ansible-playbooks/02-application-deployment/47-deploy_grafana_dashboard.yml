@@ -1,0 +1,16 @@
+# Deploy a Grafana Dashboard
+---
+- hosts: monitoring_servers
+  become: yes
+  tasks:
+    - name: Install Docker and Docker Compose
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker.io
+        - docker-compose
+    - name: Pull Grafana Docker image
+      command: docker pull grafana/grafana
+    - name: Run Grafana container
+      command: docker run -d -p 3000:3000 --name=grafana grafana/grafana
