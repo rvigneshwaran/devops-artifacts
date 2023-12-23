@@ -1,0 +1,18 @@
+# Deploy a Kafka Streaming Application
+---
+- hosts: kafka_servers
+  become: yes
+  tasks:
+    - name: Install Java and Kafka
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - openjdk-11-jdk
+        - kafka
+    - name: Deploy Kafka streaming application
+      copy:
+        src: /path/to/local/kafka/streaming/app.jar
+        dest: /opt/kafka/apps
+    - name: Start Kafka streaming application
+      command: java -jar /opt/kafka/apps/app.jar
