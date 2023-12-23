@@ -1,0 +1,11 @@
+# Deploy a .NET Core REST API
+---
+- hosts: dotnet_servers
+  become: yes
+  tasks:
+    - name: Install .NET Core runtime
+      apt:
+        name: dotnet-runtime-3.1
+        state: present
+    - name: Copy and run .NET Core REST API
+      command: dotnet /path/to/local/dotnet/rest/api/api.dll
