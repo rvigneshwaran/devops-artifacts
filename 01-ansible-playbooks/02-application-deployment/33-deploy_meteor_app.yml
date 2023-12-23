@@ -1,0 +1,20 @@
+# Deploy a Meteor.js Application
+---
+- hosts: node_servers
+  become: yes
+  tasks:
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+    - name: Install Meteor.js
+      command: curl https://install.meteor.com/ | sh
+    - name: Copy and deploy Meteor.js application
+      copy:
+        src: /path/to/local/meteor/app
+        dest: /opt/meteor/apps
+    - name: Start Meteor.js application
+      command: meteor --directory /opt/meteor/apps
