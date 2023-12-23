@@ -1,0 +1,17 @@
+# Deploy a Flask RESTful API
+---
+- hosts: python_servers
+  become: yes
+  tasks:
+    - name: Install Python and Flask
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3
+        - python3-pip
+    - name: Copy and install Flask RESTful API
+      pip:
+        requirements: /path/to/local/flask/rest/api/requirements.txt
+    - name: Start Flask RESTful API
+      command: python /path/to/local/flask/rest/api/app.py
