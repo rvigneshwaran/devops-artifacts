@@ -1,0 +1,15 @@
+# Deploy a Java Application
+---
+- hosts: java_servers
+  become: yes
+  tasks:
+    - name: Install OpenJDK
+      apt:
+        name: openjdk-11-jdk
+        state: present
+    - name: Copy Java application JAR file
+      copy:
+        src: /path/to/local/java/app/app.jar
+        dest: /opt/java/apps
+    - name: Start the Java application
+      command: java -jar /opt/java/apps/app.jar
