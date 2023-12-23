@@ -1,0 +1,16 @@
+# Deploy a Red Hat JBoss Application
+---
+- hosts: java_servers
+  become: yes
+  tasks:
+    - name: Install Java and JBoss EAP
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - java-11-openjdk
+        - jboss-eap-7.3
+    - name: Deploy JBoss application
+      copy:
+        src: /path/to/local/jboss/app.war
+        dest: /opt/jboss/standalone/deployments
