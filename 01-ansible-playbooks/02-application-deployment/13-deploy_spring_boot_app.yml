@@ -1,0 +1,11 @@
+# Deploy a Spring Boot Application
+---
+- hosts: java_servers
+  become: yes
+  tasks:
+    - name: Copy Spring Boot JAR file
+      copy:
+        src: /path/to/local/spring/boot/app/app.jar
+        dest: /opt/spring/boot/apps
+    - name: Start the Spring Boot application
+      command: java -jar /opt/spring/boot/apps/app.jar
