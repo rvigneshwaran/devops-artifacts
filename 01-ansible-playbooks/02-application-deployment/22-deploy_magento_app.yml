@@ -1,0 +1,21 @@
+# Deploy a Magento E-commerce Application
+---
+- hosts: php_servers
+  become: yes
+  tasks:
+    - name: Install PHP, Composer, and MySQL
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - composer
+        - mysql-server
+    - name: Copy Magento application files
+      copy:
+        src: /path/to/local/magento/app
+        dest: /var/www/html/magento
+    - name: Install Magento dependencies
+      command: composer install --working-dir=/var/www/html/magento
+    - name: Configure file permissions
+      command: chown -R www-data:www-data /var/www/html/magento
