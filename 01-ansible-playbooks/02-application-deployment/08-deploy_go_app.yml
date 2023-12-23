@@ -1,0 +1,13 @@
+# Deploy a Go Application
+---
+- hosts: go_servers
+  become: yes
+  tasks:
+    - name: Install Go
+      apt:
+        name: golang
+        state: present
+    - name: Copy and build Go application
+      command: go build /path/to/local/go/app/main.go
+    - name: Start the Go application
+      command: /path/to/local/go/app/main
