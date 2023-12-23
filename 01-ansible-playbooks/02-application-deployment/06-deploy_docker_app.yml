@@ -1,0 +1,13 @@
+# Deploy a Dockerized Application
+---
+- hosts: docker_servers
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+    - name: Pull Docker image
+      command: docker pull yourimage:latest
+    - name: Run Docker container
+      command: docker run -d -p 80:80 yourimage:latest
