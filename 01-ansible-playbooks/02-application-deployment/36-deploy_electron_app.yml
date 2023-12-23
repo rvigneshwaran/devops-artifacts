@@ -1,0 +1,18 @@
+# Deploy an Electron Desktop App
+---
+- hosts: electron_servers
+  become: yes
+  tasks:
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+    - name: Copy and install Electron app
+      npm:
+        path: /path/to/local/electron/app
+        state: present
+    - name: Start Electron app
+      command: npm start --prefix /path/to/local/electron/app
