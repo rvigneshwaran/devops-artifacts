@@ -1,0 +1,9 @@
+# Deploy a D3.js Visualization
+---
+- hosts: static_servers
+  become: yes
+  tasks:
+    - name: Copy D3.js visualization files
+      copy:
+        src: /path/to/local/d3js/viz
+        dest: /var/www/html/d3js_viz
