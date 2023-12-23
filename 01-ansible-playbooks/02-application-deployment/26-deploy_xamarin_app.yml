@@ -1,0 +1,11 @@
+# Deploy a Xamarin Mobile App
+---
+- hosts: xamarin_servers
+  become: yes
+  tasks:
+    - name: Copy Xamarin mobile app files
+      copy:
+        src: /path/to/local/xamarin/app
+        dest: /opt/xamarin/apps
+    - name: Build and deploy Xamarin app
+      command: /opt/xamarin/tools/build.sh /opt/xamarin/apps/app.sln
