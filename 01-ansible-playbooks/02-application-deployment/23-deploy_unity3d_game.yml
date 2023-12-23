@@ -1,0 +1,11 @@
+# Deploy a Unity3D Game
+---
+- hosts: unity_servers
+  become: yes
+  tasks:
+    - name: Copy Unity3D game files
+      copy:
+        src: /path/to/local/unity/game
+        dest: /opt/unity/games
+    - name: Start Unity3D game server
+      command: /opt/unity/games/game-server --port=8080
