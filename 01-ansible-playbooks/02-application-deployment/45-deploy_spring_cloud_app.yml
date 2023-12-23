@@ -1,0 +1,11 @@
+# Deploy a Spring Cloud Microservices App:
+---
+- hosts: java_servers
+  become: yes
+  tasks:
+    - name: Copy Spring Cloud Microservices JAR files
+      copy:
+        src: /path/to/local/spring/cloud/app
+        dest: /opt/spring/cloud/apps
+    - name: Start Spring Cloud Microservices
+      command: java -jar /opt/spring/cloud/apps/service1.jar && java -jar /opt/spring/cloud/apps/service2.jar
