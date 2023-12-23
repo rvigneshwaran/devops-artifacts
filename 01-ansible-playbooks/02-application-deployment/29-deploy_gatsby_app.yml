@@ -1,0 +1,22 @@
+# Deploy a Gatsby.js Application
+---
+- hosts: node_servers
+  become: yes
+  tasks:
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+    - name: Copy and install Gatsby.js application
+      npm:
+        path: /path/to/local/gatsby/app
+        state: present
+    - name: Build the Gatsby.js application
+      command: npm run build --prefix /path/to/local/gatsby/app
+    - name: Deploy the Gatsby.js application
+      copy:
+        src: /path/to/local/gatsby/app/public
+        dest: /var/www/html/gatsby
