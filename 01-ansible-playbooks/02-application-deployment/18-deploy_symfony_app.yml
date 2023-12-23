@@ -1,0 +1,20 @@
+# Deploy a Symfony Application
+---
+- hosts: php_servers
+  become: yes
+  tasks:
+    - name: Install PHP and Composer
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - composer
+    - name: Copy Symfony application files
+      copy:
+        src: /path/to/local/symfony/app
+        dest: /var/www/html/symfony
+    - name: Install Symfony dependencies
+      command: composer install --working-dir=/var/www/html/symfony
+    - name: Configure file permissions
+      command: chown -R www-data:www-data /var/www/html/symfony
