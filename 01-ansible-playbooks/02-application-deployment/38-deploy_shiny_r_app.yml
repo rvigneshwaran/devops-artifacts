@@ -1,0 +1,19 @@
+# Deploy a Shiny R Web App
+---
+- hosts: r_servers
+  become: yes
+  tasks:
+    - name: Install R and Shiny
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - r-base
+        - libssl-dev
+        - libcurl4-openssl-dev
+    - name: Copy and deploy Shiny app
+      copy:
+        src: /path/to/local/shiny/app
+        dest: /srv/shiny-server
+    - name: Start Shiny app
+      command: R -e "shiny::runApp('/srv/shiny-server/app')"
