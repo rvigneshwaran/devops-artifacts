@@ -1,0 +1,11 @@
+# Deploy a Rust Application
+---
+- hosts: rust_servers
+  become: yes
+  tasks:
+    - name: Install Rust
+      command: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    - name: Copy and build Rust application
+      command: cargo build --manifest-path=/path/to/local/rust/app/Cargo.toml
+    - name: Start the Rust application
+      command: /path/to/local/rust/app/target/debug/app
