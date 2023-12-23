@@ -1,0 +1,19 @@
+# Deploy a Django Channels Real-Time App
+---
+- hosts: django_servers
+  become: yes
+  tasks:
+    - name: Install Python and Django
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3
+        - python3-pip
+    - name: Copy and install Django Channels app
+      pip:
+        requirements: /path/to/local/django/channels/app/requirements.txt
+    - name: Migrate Django database
+      command: python /path/to/local/django/channels/app/manage.py migrate
+    - name: Start Django Channels app
+      command: python /path/to/local/django/channels/app/manage.py runserver 0.0.0.0:8000
