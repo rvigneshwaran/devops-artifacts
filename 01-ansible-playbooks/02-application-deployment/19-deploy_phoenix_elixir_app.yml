@@ -1,0 +1,16 @@
+# Deploy a Phoenix Elixir Application
+---
+- hosts: elixir_servers
+  become: yes
+  tasks:
+    - name: Install Elixir and Erlang
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - elixir
+        - erlang
+    - name: Copy and install Phoenix application
+      command: mix deps.get --working-dir=/path/to/local/phoenix/app
+    - name: Configure and start Phoenix application
+      command: mix phx.server --working-dir=/path/to/local/phoenix/app
