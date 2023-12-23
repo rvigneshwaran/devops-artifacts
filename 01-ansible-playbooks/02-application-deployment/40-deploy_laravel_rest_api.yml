@@ -1,0 +1,23 @@
+# Deploy a Laravel REST API
+---
+- hosts: php_servers
+  become: yes
+  tasks:
+    - name: Install PHP, Composer, and MySQL
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - composer
+        - mysql-server
+    - name: Copy Laravel REST API files
+      copy:
+        src: /path/to/local/laravel/rest/api
+        dest: /var/www/html/laravel_rest_api
+    - name: Install Laravel dependencies
+      command: composer install --working-dir=/var/www/html/laravel_rest_api
+    - name: Set Laravel application key
+      command: php artisan key:generate --working-dir=/var/www/html/laravel_rest_api
+    - name: Configure file permissions
+      command: chown -R www-data:www-data /var/www/html/laravel_rest_api
