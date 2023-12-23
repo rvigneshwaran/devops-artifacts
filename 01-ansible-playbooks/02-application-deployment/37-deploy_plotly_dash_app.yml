@@ -1,0 +1,17 @@
+# Deploy a Plotly Dash Web App
+---
+- hosts: python_servers
+  become: yes
+  tasks:
+    - name: Install Python and Dash
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3
+        - python3-pip
+    - name: Copy and install Plotly Dash app
+      pip:
+        requirements: /path/to/local/plotly_dash/app/requirements.txt
+    - name: Start Plotly Dash app
+      command: python /path/to/local/plotly_dash/app/app.py
