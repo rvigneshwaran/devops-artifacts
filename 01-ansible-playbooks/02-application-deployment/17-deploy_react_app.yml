@@ -1,0 +1,22 @@
+# Deploy a React Application
+---
+- hosts: node_servers
+  become: yes
+  tasks:
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+    - name: Copy and install React application
+      npm:
+        path: /path/to/local/react/app
+        state: present
+    - name: Build the React application
+      command: npm run build --prefix /path/to/local/react/app
+    - name: Deploy the React application
+      copy:
+        src: /path/to/local/react/app/build
+        dest: /var/www/html/react
