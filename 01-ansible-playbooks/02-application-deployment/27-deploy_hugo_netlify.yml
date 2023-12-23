@@ -1,0 +1,17 @@
+# Deploy a Hugo Static Site with Netlify
+---
+- hosts: static_servers
+  become: yes
+  tasks:
+    - name: Install Hugo
+      apt:
+        name: hugo
+        state: present
+    - name: Copy Hugo site content
+      copy:
+        src: /path/to/local/hugo/site
+        dest: /var/www/html/hugo
+    - name: Build the Hugo site
+      command: hugo -s /var/www/html/hugo -d /var/www/html/hugo/public
+    - name: Deploy to Netlify
+      command: netlify deploy --dir=/var/www/html/hugo/public
