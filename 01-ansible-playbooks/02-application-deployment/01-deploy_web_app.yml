@@ -1,0 +1,9 @@
+# Deploy a Simple Web Application
+---
+- hosts: app_servers
+  become: yes
+  tasks:
+    - name: Copy application files
+      copy:
+        src: /path/to/local/app
+        dest: /var/www/html/app
