@@ -1,0 +1,23 @@
+# Deploy a Ruby on Rails Application
+---
+- hosts: rails_servers
+  become: yes
+  tasks:
+    - name: Install Ruby and Rails dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - ruby
+        - ruby-dev
+        - libsqlite3-dev
+        - nodejs
+        - yarn
+    - name: Copy Rails application files
+      copy:
+        src: /path/to/local/rails/app
+        dest: /opt/rails/apps
+    - name: Install Rails gems
+      command: bundle install --gemfile=/opt/rails/apps/Gemfile
+    - name: Migrate database
+      command: rails db:migrate --directory=/opt/rails/apps
