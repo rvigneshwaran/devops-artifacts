@@ -1,0 +1,15 @@
+# Deploy a Jekyll Static Site
+---
+- hosts: static_servers
+  become: yes
+  tasks:
+    - name: Install Jekyll
+      apt:
+        name: ruby
+        state: present
+    - name: Copy Jekyll site content
+      copy:
+        src: /path/to/local/jekyll/site
+        dest: /var/www/html/jekyll
+    - name: Build the Jekyll site
+      command: jekyll build -s /var/www/html/jekyll -d /var/www/html/jekyll/_site
