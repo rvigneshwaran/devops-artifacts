@@ -1,0 +1,13 @@
+# Deploy a Flask Application with Gunicorn
+---
+- hosts: python_servers
+  become: yes
+  tasks:
+    - name: Install Gunicorn
+      pip:
+        name: gunicorn
+    - name: Copy and install Flask application
+      pip:
+        requirements: /path/to/local/flask/app/requirements.txt
+    - name: Start the Flask application with Gunicorn
+      command: gunicorn -b 0.0.0.0:8000 app:app
