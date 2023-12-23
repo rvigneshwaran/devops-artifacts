@@ -1,0 +1,21 @@
+# Deploy a PHP Application with Apache
+---
+- hosts: php_servers
+  become: yes
+  tasks:
+    - name: Install Apache and PHP
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apache2
+        - php
+        - libapache2-mod-php
+    - name: Copy PHP application files
+      copy:
+        src: /path/to/local/php/app
+        dest: /var/www/html/app
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
