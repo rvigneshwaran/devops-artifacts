@@ -1,0 +1,22 @@
+# Deploy a Laravel Application
+---
+- hosts: php_servers
+  become: yes
+  tasks:
+    - name: Install PHP and Composer
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - composer
+    - name: Copy Laravel application files
+      copy:
+        src: /path/to/local/laravel/app
+        dest: /var/www/html/laravel
+    - name: Install Laravel dependencies
+      command: composer install --working-dir=/var/www/html/laravel
+    - name: Set Laravel application key
+      command: php artisan key:generate --working-dir=/var/www/html/laravel
+    - name: Configure file permissions
+      command: chown -R www-data:www-data /var/www/html/laravel
