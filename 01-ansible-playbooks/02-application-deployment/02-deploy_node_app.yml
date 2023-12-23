@@ -1,0 +1,18 @@
+# Deploy a Node.js Application with PM2
+---
+- hosts: node_servers
+  become: yes
+  tasks:
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+    - name: Copy and install application dependencies
+      npm:
+        path: /path/to/local/node/app
+        state: present
+    - name: Start the Node.js application with PM2
+      command: pm2 start /path/to/local/node/app/app.js
