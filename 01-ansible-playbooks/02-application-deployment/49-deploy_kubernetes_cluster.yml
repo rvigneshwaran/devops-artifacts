@@ -1,0 +1,35 @@
+# Deploy a Kubernetes Cluster
+---
+- hosts: k8s_master_servers
+  become: yes
+  tasks:
+    - name: Install Docker and Kubernetes
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker.io
+        - apt-transport-https
+        - curl
+        - software-properties-common
+    - name: Add Kubernetes GPG key
+      command: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+    - name: Add Kubernetes repository
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    - name: Install Kubernetes components
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - kubeadm
+        - kubelet
+        - kubectl
+    - name: Initialize Kubernetes master
+      command: kubeadm init --pod-network-cidr=10.244.0.0/16
+    - name: Copy Kubernetes configuration
+      command: cp /etc/kubernetes/admin.conf /home/{{ ansible_user }}/.kube/config
+      args:
+        creates: /home/{{ ansible_user }}/.kube/config
+    - name: Install Flannel network plugin
+      command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
