@@ -1,0 +1,19 @@
+# Deploy a MEAN Stack Application
+---
+- hosts: node_servers
+  become: yes
+  tasks:
+    - name: Install Node.js, npm, and MongoDB
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+        - mongodb
+    - name: Copy and install Express.js application
+      npm:
+        path: /path/to/local/mean/app
+        state: present
+    - name: Start the MEAN Stack application
+      command: node /path/to/local/mean/app/server.js
