@@ -1,0 +1,9 @@
+# Deploy an Elastic Stack (ELK) for Logging
+---
+- hosts: logging_servers
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state:
