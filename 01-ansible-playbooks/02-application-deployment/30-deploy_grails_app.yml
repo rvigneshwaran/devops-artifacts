@@ -1,0 +1,18 @@
+# Deploy a Grails Application
+---
+- hosts: java_servers
+  become: yes
+  tasks:
+    - name: Install Java and Grails
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - openjdk-11-jdk
+        - unzip
+    - name: Copy Grails application files
+      copy:
+        src: /path/to/local/grails/app
+        dest: /opt/grails/apps
+    - name: Build and run Grails application
+      command: /opt/grails/apps/gradlew bootRun --no-daemon
