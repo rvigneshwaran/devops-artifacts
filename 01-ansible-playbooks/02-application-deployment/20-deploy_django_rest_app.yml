@@ -1,0 +1,19 @@
+# Deploy a Django REST Framework Application
+---
+- hosts: django_servers
+  become: yes
+  tasks:
+    - name: Install Python and Django
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3
+        - python3-pip
+    - name: Copy and install Django REST Framework application
+      pip:
+        requirements: /path/to/local/django/rest/app/requirements.txt
+    - name: Migrate Django database
+      command: python /path/to/local/django/rest/app/manage.py migrate
+    - name: Start Django development server
+      command: python /path/to/local/django/rest/app/manage.py runserver 0.0.0.0:8000
