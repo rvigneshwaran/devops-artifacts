@@ -1,0 +1,13 @@
+# Configure Jenkins Pipeline with Gradle
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins pipeline with Gradle
+      jenkins_pipeline:
+        name: gradle_pipeline
+        state: present
+        config: "{{ lookup('template', 'gradle_pipeline.groovy.j2') }}"
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
