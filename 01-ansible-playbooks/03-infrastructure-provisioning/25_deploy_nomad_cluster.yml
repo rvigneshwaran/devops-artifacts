@@ -1,0 +1,20 @@
+# Deploy HashiCorp Nomad Cluster
+---
+- hosts: nomad_cluster
+  become: yes
+  tasks:
+    - name: Install HashiCorp Nomad
+      apt:
+        name: nomad
+        state: present
+    - name: Configure Nomad Cluster
+      template:
+        src: /path/to/local/nomad/nomad_cluster.hcl.j2
+        dest: /etc/nomad/nomad_cluster.hcl
+      notify:
+        - restart nomad
+  handlers:
+    - name: restart nomad
+      service:
+        name: nomad
+        state: restarted
