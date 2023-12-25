@@ -1,0 +1,20 @@
+# Deploy Pritunl VPN Server
+---
+- hosts: pritunl_vpn_server
+  become: yes
+  tasks:
+    - name: Install Pritunl VPN Server
+      apt:
+        name: pritunl
+        state: present
+    - name: Configure Pritunl VPN Server
+      template:
+        src: /path/to/local/pritunl/pritunl_config.json.j2
+        dest: /etc/pritunl/pritunl_config.json
+      notify:
+        - restart pritunl
+  handlers:
+    - name: restart pritunl
+      service:
+        name: pritunl
+        state: restarted
