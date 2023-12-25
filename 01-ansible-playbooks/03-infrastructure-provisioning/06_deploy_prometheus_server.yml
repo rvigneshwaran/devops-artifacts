@@ -1,0 +1,20 @@
+# Deploy Prometheus Monitoring Server
+---
+- hosts: prometheus_server
+  become: yes
+  tasks:
+    - name: Install Prometheus
+      apt:
+        name: prometheus
+        state: present
+    - name: Configure Prometheus
+      template:
+        src: /path/to/local/prometheus/prometheus_config.yml.j2
+        dest: /etc/prometheus/prometheus_config.yml
+      notify:
+        - restart prometheus
+  handlers:
+    - name: restart prometheus
+      service:
+        name: prometheus
+        state: restarted
