@@ -1,0 +1,20 @@
+# Set Up OpenLDAP Server
+---
+- hosts: openldap_server
+  become: yes
+  tasks:
+    - name: Install OpenLDAP
+      yum:
+        name: openldap
+        state: present
+    - name: Configure OpenLDAP
+      template:
+        src: /path/to/local/openldap/openldap_config.ldif.j2
+        dest: /etc/openldap/openldap_config.ldif
+      notify:
+        - restart slapd
+  handlers:
+    - name: restart slapd
+      service:
+        name: slapd
+        state: restarted
