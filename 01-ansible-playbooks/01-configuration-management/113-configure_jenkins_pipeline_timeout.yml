@@ -1,0 +1,13 @@
+# Configure Jenkins Pipeline with Timeout:
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins pipeline with timeout
+      jenkins_pipeline:
+        name: timeout_pipeline
+        state: present
+        config: "{{ lookup('template', 'timeout_pipeline.groovy.j2') }}"
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
