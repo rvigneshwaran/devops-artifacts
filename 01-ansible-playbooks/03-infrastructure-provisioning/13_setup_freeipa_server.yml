@@ -1,0 +1,20 @@
+# Set Up FreeIPA Server
+---
+- hosts: freeipa_server
+  become: yes
+  tasks:
+    - name: Install FreeIPA Server
+      yum:
+        name: freeipa-server
+        state: present
+    - name: Configure FreeIPA Server
+      template:
+        src: /path/to/local/freeipa/freeipa_config.ldif.j2
+        dest: /etc/freeipa/freeipa_config.ldif
+      notify:
+        - restart freeipa
+  handlers:
+    - name: restart freeipa
+      service:
+        name: freeipa
+        state: restarted
