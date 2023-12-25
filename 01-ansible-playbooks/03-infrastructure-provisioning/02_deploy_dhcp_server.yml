@@ -1,0 +1,20 @@
+# Deploy DHCP Server
+---
+- hosts: dhcp_server
+  become: yes
+  tasks:
+    - name: Install DHCP Server
+      yum:
+        name: dhcpd
+        state: present
+    - name: Configure DHCP Server
+      template:
+        src: /path/to/local/dhcp/dhcp_server_config.conf.j2
+        dest: /etc/dhcp/dhcpd.conf
+      notify:
+        - restart dhcpd
+  handlers:
+    - name: restart dhcpd
+      service:
+        name: dhcpd
+        state: restarted
