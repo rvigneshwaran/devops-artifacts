@@ -1,0 +1,18 @@
+# Deploy OpenStack Cloud
+---
+- hosts: openstack_cloud
+  become: yes
+  tasks:
+    - name: Install OpenStack
+      shell: /path/to/local/openstack/install.sh
+    - name: Configure OpenStack Cloud
+      template:
+        src: /path/to/local/openstack/openstack_config.yaml.j2
+        dest: /etc/openstack/openstack_config.yaml
+      notify:
+        - restart openstack
+  handlers:
+    - name: restart openstack
+      service:
+        name: openstack
+        state: restarted
