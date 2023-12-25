@@ -1,0 +1,18 @@
+# Set Up OpenShift Cluster
+---
+- hosts: openshift_cluster
+  become: yes
+  tasks:
+    - name: Install OpenShift
+      shell: /path/to/local/openshift/install.sh
+    - name: Configure OpenShift Cluster
+      template:
+        src: /path/to/local/openshift/openshift_config.yaml.j2
+        dest: /etc/openshift/openshift_config.yaml
+      notify:
+        - restart openshift
+  handlers:
+    - name: restart openshift
+      service:
+        name: openshift
+        state: restarted
