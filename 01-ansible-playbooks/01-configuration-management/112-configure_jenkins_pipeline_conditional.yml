@@ -1,0 +1,13 @@
+# Configure Jenkins Pipeline with Conditional Step
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins pipeline with conditional step
+      jenkins_pipeline:
+        name: conditional_step_pipeline
+        state: present
+        config: "{{ lookup('template', 'conditional_step_pipeline.groovy.j2') }}"
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
