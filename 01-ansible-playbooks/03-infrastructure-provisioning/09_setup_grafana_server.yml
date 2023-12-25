@@ -1,0 +1,20 @@
+# Set Up Grafana Monitoring Server
+---
+- hosts: grafana_server
+  become: yes
+  tasks:
+    - name: Install Grafana
+      apt:
+        name: grafana
+        state: present
+    - name: Configure Grafana
+      template:
+        src: /path/to/local/grafana/grafana_config.ini.j2
+        dest: /etc/grafana/grafana_config.ini
+      notify:
+        - restart grafana
+  handlers:
+    - name: restart grafana
+      service:
+        name: grafana
+        state: restarted
