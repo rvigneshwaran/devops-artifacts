@@ -1,0 +1,20 @@
+# Set Up HashiCorp Packer Server
+---
+- hosts: packer_server
+  become: yes
+  tasks:
+    - name: Install Packer
+      apt:
+        name: packer
+        state: present
+    - name: Configure Packer Server
+      template:
+        src: /path/to/local/packer/packer_config.json.j2
+        dest: /etc/packer/packer_config.json
+      notify:
+        - restart packer
+  handlers:
+    - name: restart packer
+      service:
+        name: packer
+        state: restarted
