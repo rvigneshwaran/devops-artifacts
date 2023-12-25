@@ -1,0 +1,9 @@
+# Set Up Active Directory Domain Controller
+---
+- hosts: ad_domain_controller
+  become: yes
+  tasks:
+    - name: Install Active Directory
+      win_command: Add-WindowsFeature AD-Domain-Services
+    - name: Configure Active Directory
+      win_command: Install-ADDSForest -DomainName corp.contoso.com -DomainNetbiosName CORP -ForestMode Win2016 -DomainMode Win2016
