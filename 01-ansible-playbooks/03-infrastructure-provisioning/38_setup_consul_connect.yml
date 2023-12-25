@@ -1,0 +1,20 @@
+# Set Up HashiCorp Consul Connect
+---
+- hosts: consul_connect
+  become: yes
+  tasks:
+    - name: Install HashiCorp Consul
+      apt:
+        name: consul
+        state: present
+    - name: Configure Consul Connect
+      template:
+        src: /path/to/local/consul/connect_config.hcl.j2
+        dest: /etc/consul/connect_config.hcl
+      notify:
+        - restart consul_connect
+  handlers:
+    - name: restart consul_connect
+      service:
+        name: consul_connect
+        state: restarted
