@@ -1,0 +1,16 @@
+# Set Up Juniper SRX Firewall
+---
+- hosts: juniper_srx_firewall
+  become: yes
+  tasks:
+    - name: Configure Juniper SRX Firewall
+      template:
+        src: /path/to/local/juniper/srx_firewall_config.conf.j2
+        dest: /etc/juniper/srx_firewall_config.conf
+      notify:
+        - restart juniper_srx_firewall
+  handlers:
+    - name: restart juniper_srx_firewall
+      service:
+        name: juniper_srx_firewall
+        state: restarted
