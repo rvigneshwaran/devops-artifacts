@@ -1,0 +1,18 @@
+# Deploy Citrix ADC (NetScaler) Load Balancer
+---
+- hosts: citrix_adc_load_balancer
+  become: yes
+  tasks:
+    - name: Install Citrix ADC
+      shell: /path/to/local/citrix/adc_install.sh
+    - name: Configure Citrix ADC Load Balancer
+      template:
+        src: /path/to/local/citrix/adc_config.conf.j2
+        dest: /etc/citrix/adc_config.conf
+      notify:
+        - restart citrix_adc
+  handlers:
+    - name: restart citrix_adc
+      service:
+        name: citrix_adc
+        state: restarted
