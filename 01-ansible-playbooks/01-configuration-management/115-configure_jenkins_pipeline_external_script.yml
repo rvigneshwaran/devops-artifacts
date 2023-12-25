@@ -1,0 +1,13 @@
+# Configure Jenkins Pipeline with External Script
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins pipeline with external script
+      jenkins_pipeline:
+        name: external_script_pipeline
+        state: present
+        config: "{{ lookup('template', 'external_script_pipeline.groovy.j2') }}"
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
