@@ -1,0 +1,20 @@
+# Deploy HashiCorp Terraform Server
+---
+- hosts: terraform_server
+  become: yes
+  tasks:
+    - name: Install Terraform
+      apt:
+        name: terraform
+        state: present
+    - name: Configure Terraform Server
+      template:
+        src: /path/to/local/terraform/terraform_config.hcl.j2
+        dest: /etc/terraform/terraform_config.hcl
+      notify:
+        - restart terraform
+  handlers:
+    - name: restart terraform
+      service:
+        name: terraform
+        state: restarted
