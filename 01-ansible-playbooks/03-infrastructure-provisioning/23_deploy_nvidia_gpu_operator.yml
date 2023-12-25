@@ -1,0 +1,11 @@
+# Deploy NVIDIA GPU Operator on Kubernetes
+---
+- hosts: nvidia_gpu_operator
+  become: yes
+  tasks:
+    - name: Install NVIDIA GPU Operator
+      shell: /path/to/local/nvidia/gpu_operator_install.sh
+    - name: Configure GPU Operator
+      template:
+        src: /path/to/local/nvidia/gpu_operator_config.yaml.j2
+        dest: /etc/nvidia/gpu_operator_config.yaml
