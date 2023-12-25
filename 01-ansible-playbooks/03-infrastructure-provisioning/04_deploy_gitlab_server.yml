@@ -1,0 +1,20 @@
+# Deploy GitLab Server
+---
+- hosts: gitlab_server
+  become: yes
+  tasks:
+    - name: Install GitLab
+      apt:
+        name: gitlab
+        state: present
+    - name: Configure GitLab
+      template:
+        src: /path/to/local/gitlab/gitlab_config.rb.j2
+        dest: /etc/gitlab/gitlab_config.rb
+      notify:
+        - restart gitlab
+  handlers:
+    - name: restart gitlab
+      service:
+        name: gitlab
+        state: restarted
