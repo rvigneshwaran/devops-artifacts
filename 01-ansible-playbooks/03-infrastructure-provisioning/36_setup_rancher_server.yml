@@ -1,0 +1,18 @@
+# Set Up Rancher Server
+---
+- hosts: rancher_server
+  become: yes
+  tasks:
+    - name: Install Rancher Server
+      shell: /path/to/local/rancher/install.sh
+    - name: Configure Rancher Server
+      template:
+        src: /path/to/local/rancher/rancher_config.yaml.j2
+        dest: /etc/rancher/rancher_config.yaml
+      notify:
+        - restart rancher
+  handlers:
+    - name: restart rancher
+      service:
+        name: rancher
+        state: restarted
