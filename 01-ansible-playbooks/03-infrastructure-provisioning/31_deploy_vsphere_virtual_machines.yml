@@ -1,0 +1,11 @@
+# Deploy VMware vSphere Virtual Machines
+---
+- hosts: vsphere_vm
+  become: yes
+  tasks:
+    - name: Install VMware PowerCLI
+      shell: Install-Module -Name VMware.PowerCLI -Force -AllowClobber -Scope CurrentUser
+    - name: Configure vSphere VMs
+      template:
+        src: /path/to/local/vsphere/vsphere_vm_config.ps1.j2
+        dest: /etc/vsphere/vsphere_vm_config.ps1
