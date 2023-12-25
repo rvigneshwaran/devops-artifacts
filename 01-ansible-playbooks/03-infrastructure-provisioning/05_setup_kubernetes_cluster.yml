@@ -1,0 +1,18 @@
+# Set Up Kubernetes Cluster
+---
+- hosts: k8s_master
+  become: yes
+  tasks:
+    - name: Install Kubernetes
+      shell: /path/to/local/kubernetes/install.sh
+    - name: Configure Kubernetes Master
+      template:
+        src: /path/to/local/kubernetes/master_config.yaml.j2
+        dest: /etc/kubernetes/master_config.yaml
+      notify:
+        - restart kubelet
+  handlers:
+    - name: restart kubelet
+      service:
+        name: kubelet
+        state: restarted
