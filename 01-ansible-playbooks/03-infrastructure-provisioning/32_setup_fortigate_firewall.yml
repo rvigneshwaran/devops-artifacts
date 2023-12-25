@@ -1,0 +1,16 @@
+# Set Up Fortinet FortiGate Firewall
+---
+- hosts: fortigate_firewall
+  become: yes
+  tasks:
+    - name: Configure Fortinet FortiGate Firewall
+      template:
+        src: /path/to/local/fortigate/firewall_config.conf.j2
+        dest: /etc/fortigate/firewall_config.conf
+      notify:
+        - restart fortigate_firewall
+  handlers:
+    - name: restart fortigate_firewall
+      service:
+        name: fortigate_firewall
+        state: restarted
