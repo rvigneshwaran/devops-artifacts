@@ -1,0 +1,8 @@
+# Configure Jenkins Script Approval for Groovy Scripts
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Approve Groovy script in Jenkins Script Approval
+      jenkins_script:
+        script: "Jenkins.instance.getScriptApproval().approveScript('println(\"Hello, World!\")', 'groovy')"
