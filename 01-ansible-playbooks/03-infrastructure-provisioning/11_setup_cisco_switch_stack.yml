@@ -1,0 +1,14 @@
+# Set Up Cisco Catalyst Switch Stack
+---
+- hosts: cisco_switch_stack
+  become: yes
+  tasks:
+    - name: Configure Cisco Switch Stack
+      template:
+        src: /path/to/local/cisco/switch_stack_config.txt.j2
+        dest: /etc/cisco/switch_stack_config.txt
+      notify:
+        - reload cisco_switch_stack
+  handlers:
+    - name: reload cisco_switch_stack
+      command: reload
