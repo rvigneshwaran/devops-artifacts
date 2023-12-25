@@ -1,0 +1,13 @@
+# Configure Jenkins Job DSL with Bitbucket SCM
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins DSL job with Bitbucket SCM
+      jenkins_job:
+        config: "{{ lookup('template', 'bitbucket_scm_job.xml.j2') }}"
+        name: bitbucket_scm_job
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
