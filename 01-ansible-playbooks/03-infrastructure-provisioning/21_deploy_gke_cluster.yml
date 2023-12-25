@@ -1,0 +1,13 @@
+# Deploy Google Kubernetes Engine (GKE) Cluster
+---
+- hosts: gke_cluster
+  become: yes
+  tasks:
+    - name: Install Google Cloud SDK
+      apt:
+        name: google-cloud-sdk
+        state: present
+    - name: Configure GKE Cluster
+      template:
+        src: /path/to/local/gke/gke_cluster.yaml.j2
+        dest: /etc/gke/gke_cluster.yaml
