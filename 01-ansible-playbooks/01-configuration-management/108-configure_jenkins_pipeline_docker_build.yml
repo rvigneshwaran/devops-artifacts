@@ -1,0 +1,13 @@
+# Configure Jenkins Pipeline with Docker Build
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Create Jenkins pipeline with Docker build
+      jenkins_pipeline:
+        name: docker_build_pipeline
+        state: present
+        config: "{{ lookup('template', 'docker_build_pipeline.groovy.j2') }}"
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
