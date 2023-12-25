@@ -1,0 +1,9 @@
+# Set Up Microsoft SQL Server Cluster
+---
+- hosts: mssql_cluster
+  become: yes
+  tasks:
+    - name: Install Microsoft SQL Server
+      win_command: Add-WindowsFeature MSSQL-Server
+    - name: Configure SQL Server Cluster
+      win_command: Install-SqlServer -Edition 'Enterprise' -InstallDir 'C:\SQLServer' -InstanceName 'MSSQLSERVER' -SQLSysAdminAccounts 'CONTOSO\Administrator' -TCPEnabled $true
