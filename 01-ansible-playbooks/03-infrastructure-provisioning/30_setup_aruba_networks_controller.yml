@@ -1,0 +1,16 @@
+# Set Up Aruba Networks Controller
+---
+- hosts: aruba_networks_controller
+  become: yes
+  tasks:
+    - name: Configure Aruba Networks Controller
+      template:
+        src: /path/to/local/aruba/controller_config.conf.j2
+        dest: /etc/aruba/controller_config.conf
+      notify:
+        - restart aruba_controller
+  handlers:
+    - name: restart aruba_controller
+      service:
+        name: aruba_controller
+        state: restarted
