@@ -1,0 +1,18 @@
+# Deploy Red Hat Satellite Server
+---
+- hosts: satellite_server
+  become: yes
+  tasks:
+    - name: Install Red Hat Satellite
+      shell: /path/to/local/satellite/install.sh
+    - name: Configure Satellite Server
+      template:
+        src: /path/to/local/satellite/satellite_config.yaml.j2
+        dest: /etc/satellite/satellite_config.yaml
+      notify:
+        - restart satellite
+  handlers:
+    - name: restart satellite
+      service:
+        name: satellite
+        state: restarted
