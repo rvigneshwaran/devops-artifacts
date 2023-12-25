@@ -1,0 +1,18 @@
+# Deploy Kubernetes Dashboard
+---
+- hosts: k8s_dashboard
+  become: yes
+  tasks:
+    - name: Install Kubernetes Dashboard
+      shell: /path/to/local/kubernetes/dashboard_install.sh
+    - name: Configure Kubernetes Dashboard
+      template:
+        src: /path/to/local/kubernetes/dashboard_config.yaml.j2
+        dest: /etc/kubernetes/dashboard_config.yaml
+      notify:
+        - restart k8s_dashboard
+  handlers:
+    - name: restart k8s_dashboard
+      service:
+        name: kubernetes-dashboard
+        state: restarted
