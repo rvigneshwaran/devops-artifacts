@@ -1,0 +1,20 @@
+# Set Up Splunk Enterprise
+---
+- hosts: splunk_enterprise
+  become: yes
+  tasks:
+    - name: Install Splunk Enterprise
+      apt:
+        name: splunk
+        state: present
+    - name: Configure Splunk Enterprise
+      template:
+        src: /path/to/local/splunk/splunk_config.conf.j2
+        dest: /etc/splunk/splunk_config.conf
+      notify:
+        - restart splunk
+  handlers:
+    - name: restart splunk
+      service:
+        name: splunk
+        state: restarted
