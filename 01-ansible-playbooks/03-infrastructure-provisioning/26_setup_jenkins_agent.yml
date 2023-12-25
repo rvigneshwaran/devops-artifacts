@@ -1,0 +1,20 @@
+# Set Up Jenkins Agent
+---
+- hosts: jenkins_agent
+  become: yes
+  tasks:
+    - name: Install Jenkins Agent
+      apt:
+        name: jenkins-agent
+        state: present
+    - name: Configure Jenkins Agent
+      template:
+        src: /path/to/local/jenkins/agent_config.xml.j2
+        dest: /etc/jenkins/agent_config.xml
+      notify:
+        - restart jenkins_agent
+  handlers:
+    - name: restart jenkins_agent
+      service:
+        name: jenkins-agent
+        state: restarted
