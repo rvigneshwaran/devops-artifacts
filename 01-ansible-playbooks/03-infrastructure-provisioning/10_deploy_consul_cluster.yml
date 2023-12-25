@@ -1,0 +1,20 @@
+# Deploy HashiCorp Consul Cluster
+---
+- hosts: consul_cluster
+  become: yes
+  tasks:
+    - name: Install Consul
+      apt:
+        name: consul
+        state: present
+    - name: Configure Consul Cluster
+      template:
+        src: /path/to/local/consul/consul_config.hcl.j2
+        dest: /etc/consul/consul_config.hcl
+      notify:
+        - restart consul
+  handlers:
+    - name: restart consul
+      service:
+        name: consul
+        state: restarted
