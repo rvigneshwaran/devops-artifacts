@@ -1,0 +1,13 @@
+# Set Up AWS Lambda Function
+---
+- hosts: aws_lambda_function
+  become: yes
+  tasks:
+    - name: Install AWS CLI
+      apt:
+        name: aws-cli
+        state: present
+    - name: Configure AWS Lambda Function
+      template:
+        src: /path/to/local/aws/lambda_function_config.json.j2
+        dest: /etc/aws/lambda_function_config.json
