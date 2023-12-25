@@ -1,0 +1,20 @@
+# Set Up HashiCorp Vault Cluster
+---
+- hosts: vault_cluster
+  become: yes
+  tasks:
+    - name: Install HashiCorp Vault
+      apt:
+        name: vault
+        state: present
+    - name: Configure Vault Cluster
+      template:
+        src: /path/to/local/vault/vault_cluster.hcl.j2
+        dest: /etc/vault/vault_cluster.hcl
+      notify:
+        - restart vault
+  handlers:
+    - name: restart vault
+      service:
+        name: vault
+        state: restarted
