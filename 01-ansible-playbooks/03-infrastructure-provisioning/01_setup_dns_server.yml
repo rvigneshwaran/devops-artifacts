@@ -1,0 +1,20 @@
+# Set Up DNS Server
+---
+- hosts: dns_server
+  become: yes
+  tasks:
+    - name: Install BIND
+      yum:
+        name: bind
+        state: present
+    - name: Configure DNS Server
+      template:
+        src: /path/to/local/dns/dns_server_config.conf.j2
+        dest: /etc/named/dns_server_config.conf
+      notify:
+        - restart bind
+  handlers:
+    - name: restart bind
+      service:
+        name: named
+        state: restarted
