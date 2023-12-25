@@ -1,0 +1,12 @@
+# Configure Jenkins Blue Ocean Git Pipeline
+---
+- hosts: jenkins
+  become: yes
+  tasks:
+    - name: Install Blue Ocean Git Pipelines plugin
+      jenkins_plugin:
+        name: blueocean-git-pipeline
+        state: present
+    - name: Reload Jenkins configuration
+      jenkins_script:
+        script: "Jenkins.instance.reload()"
