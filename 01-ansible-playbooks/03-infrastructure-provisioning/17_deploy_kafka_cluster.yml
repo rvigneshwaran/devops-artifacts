@@ -1,0 +1,20 @@
+# Deploy Apache Kafka Cluster
+---
+- hosts: kafka_cluster
+  become: yes
+  tasks:
+    - name: Install Apache Kafka
+      apt:
+        name: kafka
+        state: present
+    - name: Configure Kafka Cluster
+      template:
+        src: /path/to/local/kafka/kafka_cluster.properties.j2
+        dest: /etc/kafka/kafka_cluster.properties
+      notify:
+        - restart kafka
+  handlers:
+    - name: restart kafka
+      service:
+        name: kafka
+        state: restarted
