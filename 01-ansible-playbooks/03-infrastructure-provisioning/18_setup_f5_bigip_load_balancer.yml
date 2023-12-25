@@ -1,0 +1,16 @@
+# Set Up F5 BIG-IP Load Balancer
+---
+- hosts: f5_bigip_load_balancer
+  become: yes
+  tasks:
+    - name: Configure F5 BIG-IP Load Balancer
+      template:
+        src: /path/to/local/f5/bigip_load_balancer_config.tmsh.j2
+        dest: /etc/f5/bigip_load_balancer_config.tmsh
+      notify:
+        - restart f5_bigip_load_balancer
+  handlers:
+    - name: restart f5_bigip_load_balancer
+      service:
+        name: f5_bigip_load_balancer
+        state: restarted
