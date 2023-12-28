@@ -1,0 +1,13 @@
+# Orchestrate Microsoft Azure Kubernetes Service (AKS) Cluster
+---
+- hosts: aks_cluster
+  become: yes
+  tasks:
+    - name: Install Azure CLI
+      apt:
+        name: azure-cli
+        state: present
+    - name: Configure AKS Cluster
+      template:
+        src: /path/to/local/aks/aks_cluster_config.json.j2
+        dest: /etc/aks/aks_cluster_config.json
