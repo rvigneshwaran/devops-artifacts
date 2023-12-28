@@ -1,0 +1,11 @@
+# Orchestrate Microsoft Exchange Server Mailbox Configuration
+---
+- hosts: exchange_server
+  become: yes
+  tasks:
+    - name: Configure Exchange Server Mailboxes
+      win_shell: |
+        Add-Mailbox -Name "{{ item.mailbox_name }}" -Database "{{ item.database }}" -Alias "{{ item.alias }}" -UserPrincipalName "{{ item.upn }}"
+      with_items:
+        - { mailbox_name: "web_mailbox", database: "MailboxDatabase1", alias: "web_user", upn: "web_user@example.com" }
+        - { mailbox_name: "app_mailbox", database: "MailboxDatabase2", alias: "app_user", upn: "app_user@example.com" }
