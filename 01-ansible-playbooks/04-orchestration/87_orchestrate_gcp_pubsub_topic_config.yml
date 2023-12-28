@@ -1,0 +1,15 @@
+# Orchestrate Google Cloud Pub/Sub Topic Configuration
+---
+- hosts: gcp_pubsub_controller
+  become: yes
+  tasks:
+    - name: Configure Google Cloud Pub/Sub Topics
+      gcpubsub_topic:
+        project: "{{ gcp_project }}"
+        auth_kind: "{{ gcp_auth_kind }}"
+        service_account_file: "{{ gcp_cred_file }}"
+        name: "{{ item.topic_name }}"
+        state: present
+      with_items:
+        - { topic_name: "web_logs" }
+        - { topic_name: "app_events" }
