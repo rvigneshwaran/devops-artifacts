@@ -1,0 +1,16 @@
+# Orchestrate Microsoft Azure Virtual Network Setup
+---
+- hosts: azure_network_controller
+  become: yes
+  tasks:
+    - name: Set Up Azure Virtual Network
+      azure_rm_virtualnetwork:
+        resource_group: "{{ resource_group }}"
+        name: "{{ item.network_name }}"
+        address_prefixes: "{{ item.address_prefixes }}"
+        subnets:
+          - name: "{{ item.subnet_name }}"
+            address_prefix: "{{ item.subnet_address_prefix }}"
+      with_items:
+        - { network_name: "web_network", address_prefixes: ["10.0.0.0/16"], subnet_name: "web_subnet", subnet_address_prefix: "10.0.1.0/24" }
+        - { network_name: "app_network", address_prefixes: ["10.1.0.0/16"], subnet_name: "app_subnet", subnet_address_prefix: "10.1.1.0/24" }
