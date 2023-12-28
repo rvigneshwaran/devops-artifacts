@@ -1,0 +1,15 @@
+# Orchestrate Jenkins Job Deployment
+---
+- hosts: jenkins_controller
+  become: yes
+  tasks:
+    - name: Deploy Jenkins Job
+      jenkins_job:
+        name: "{{ item.job_name }}"
+        config: "{{ lookup('file', 'path/to/local/jenkins/{{ item.job_name }}.xml') }}"
+        url: "{{ jenkins_url }}"
+        user: "{{ jenkins_user }}"
+        password: "{{ jenkins_password }}"
+      with_items:
+        - { job_name: "web_job" }
+        - { job_name: "app_job" }
