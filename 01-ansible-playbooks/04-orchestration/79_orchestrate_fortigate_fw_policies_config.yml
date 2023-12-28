@@ -1,0 +1,19 @@
+# Orchestrate Fortinet FortiGate Firewall Policies Configuration
+---
+- hosts: fortigate_firewall
+  become: yes
+  tasks:
+    - name: Configure Fortinet FortiGate Firewall Policies
+      fortios_policy:
+        host: "{{ fortigate_host }}"
+        username: "{{ fortigate_username }}"
+        password: "{{ fortigate_password }}"
+        policyid: "{{ item.policy_id }}"
+        srcintf: "{{ item.src_interface }}"
+        dstintf: "{{ item.dst_interface }}"
+        srcaddr: "{{ item.src_address }}"
+        dstaddr: "{{ item.dst_address }}"
+        action: "{{ item.action }}"
+      with_items:
+        - { policy_id: "web_to_app_policy", src_interface: "internal", dst_interface: "external", src_address: "10.0.1.0/24", dst_address: "10.1.1.0/24", action: "accept" }
+        - { policy_id: "app_to_db_policy", src_interface: "internal", dst_interface: "external", src_address: "10.1.1.0/24", dst_address: "10.2.2.0/24", action: "accept" }
