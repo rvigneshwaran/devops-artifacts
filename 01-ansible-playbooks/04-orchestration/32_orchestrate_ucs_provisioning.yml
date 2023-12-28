@@ -1,0 +1,17 @@
+# Orchestrate Cisco UCS Server Provisioning
+---
+- hosts: ucs_manager
+  become: yes
+  tasks:
+    - name: Provision Cisco UCS Server
+      ucs_server_profile:
+        hostname: "{{ ucs_hostname }}"
+        username: "{{ ucs_username }}"
+        password: "{{ ucs_password }}"
+        org_dn: "{{ ucs_org_dn }}"
+        name: "{{ item.name }}"
+        template: "{{ item.template }}"
+        state: present
+      with_items:
+        - { name: "web_server", template: "web_template" }
+        - { name: "app_server", template: "app_template" }
