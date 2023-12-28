@@ -1,0 +1,19 @@
+# Orchestrate Cisco Meraki Firewall Rules Configuration
+---
+- hosts: meraki_firewall
+  become: yes
+  tasks:
+    - name: Configure Meraki Firewall Rules
+      meraki_firewall:
+        api_key: "{{ meraki_api_key }}"
+        organization_id: "{{ meraki_organization_id }}"
+        network_id: "{{ meraki_network_id }}"
+        rules:
+          - name: "Allow Web to App"
+            policy: "allow"
+            protocol: "tcp"
+            src_port: "any"
+            dst_port: "443"
+            src_cidr: "10.0.1.0/24"
+            dst_cidr: "10.1.1.0/24"
+      register: result
