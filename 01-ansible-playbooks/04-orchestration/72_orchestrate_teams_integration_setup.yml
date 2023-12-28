@@ -1,0 +1,14 @@
+# Orchestrate Microsoft Teams Integration Setup
+---
+- hosts: teams_integration_server
+  become: yes
+  tasks:
+    - name: Set Up Microsoft Teams Integration
+      teams_message:
+        token: "{{ teams_token }}"
+        team: "{{ item.team }}"
+        channel: "{{ item.channel }}"
+        message: "Integration Setup for {{ item.application }}"
+      with_items:
+        - { team: "web_team", channel: "web_channel", application: "Web App" }
+        - { team: "app_team", channel: "app_channel", application: "App Service" }
