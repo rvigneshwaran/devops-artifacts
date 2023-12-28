@@ -1,0 +1,15 @@
+# Orchestrate AWS EC2 Instances
+---
+- hosts: localhost
+  tasks:
+    - name: Launch EC2 Instances
+      ec2_instance:
+        name: "{{ item.name }}"
+        image_id: "{{ item.image_id }}"
+        instance_type: "{{ item.instance_type }}"
+        key_name: "{{ item.key_name }}"
+        count: "{{ item.count }}"
+        state: running
+      with_items:
+        - { name: "web_instance", image_id: "ami-12345678", instance_type: "t2.micro", key_name: "my_key", count: 2 }
+        - { name: "app_instance", image_id: "ami-87654321", instance_type: "t2.small", key_name: "my_key", count: 3 }
