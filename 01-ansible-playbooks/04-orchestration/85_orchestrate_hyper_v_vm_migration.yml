@@ -1,0 +1,10 @@
+# Orchestrate Microsoft Hyper-V VM Migration
+---
+- hosts: hyper_v_host
+  become: yes
+  tasks:
+    - name: Migrate Hyper-V Virtual Machines
+      win_shell: Move-VM -Name "{{ item.vm_name }}" -DestinationHost "{{ item.destination_host }}"
+      with_items:
+        - { vm_name: "web_vm", destination_host: "hyper-v-host-2" }
+        - { vm_name: "app_vm", destination_host: "hyper-v-host-3" }
