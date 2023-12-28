@@ -1,0 +1,22 @@
+# Orchestrate Alibaba Cloud RDS Database Setup
+---
+- hosts: alibaba_cloud_rds_controller
+  become: yes
+  tasks:
+    - name: Set Up Alibaba Cloud RDS Databases
+      alibabacloud_rds_instance:
+        access_key: "{{ alibaba_access_key }}"
+        secret_key: "{{ alibaba_secret_key }}"
+        region: "{{ alibaba_region }}"
+        instance_name: "{{ item.db_instance_name }}"
+        engine: "{{ item.db_engine }}"
+        engine_version: "{{ item.db_engine_version }}"
+        master_username: "{{ item.master_username }}"
+        master_password: "{{ item.master_password }}"
+        character_set: "{{ item.character_set }}"
+        security_ips: "{{ item.security_ips }}"
+        port: "{{ item.port }}"
+        zone: "{{ alibaba_zone }}"
+      with_items:
+        - { db_instance_name: "web_db_instance", db_engine: "MySQL", db_engine_version: "8.0", master_username: "web_master", master_password: "web_password", character_set: "utf8", security_ips: "10.0.1.0/24", port: 3306 }
+        - { db_instance_name: "app_db_instance", db_engine: "PostgreSQL", db_engine_version: "12", master_username: "app_master", master_password: "app_password", character_set: "UTF8", security_ips: "10.1.1.0/24", port: 5432 }
