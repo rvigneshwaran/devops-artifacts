@@ -1,0 +1,16 @@
+# Orchestrate Red Hat Satellite Server Provisioning
+---
+- hosts: satellite_server
+  become: yes
+  tasks:
+    - name: Provision Red Hat Satellite Server
+      redhat_subscription:
+        satellite_host: "{{ satellite_host }}"
+        satellite_username: "{{ satellite_username }}"
+        satellite_password: "{{ satellite_password }}"
+        org: "{{ satellite_org }}"
+        activation_key: "{{ item.activation_key }}"
+        state: present
+      with_items:
+        - { activation_key: "web_activation_key" }
+        - { activation_key: "app_activation_key" }
