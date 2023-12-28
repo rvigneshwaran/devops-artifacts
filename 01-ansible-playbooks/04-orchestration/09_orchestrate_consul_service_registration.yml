@@ -1,0 +1,15 @@
+# Orchestrate HashiCorp Consul Service Registration
+
+---
+- hosts: consul_server
+  become: yes
+  tasks:
+    - name: Register Services with Consul
+      consul_service:
+        host: "{{ consul_host }}"
+        port: "{{ item.port }}"
+        service_name: "{{ item.service_name }}"
+        state: present
+      with_items:
+        - { port: 8080, service_name: "web_service" }
+        - { port: 9090, service_name: "app_service" }
