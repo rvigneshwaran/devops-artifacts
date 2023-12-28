@@ -1,0 +1,16 @@
+# Orchestrate VMware vRealize Automation Deployment
+---
+- hosts: vra_server
+  become: yes
+  tasks:
+    - name: Deploy vRealize Automation Blueprint
+      vra_deployment:
+        vra_url: "{{ vra_url }}"
+        vra_username: "{{ vra_username }}"
+        vra_password: "{{ vra_password }}"
+        blueprint_name: "{{ item.blueprint_name }}"
+        inputs: "{{ item.inputs }}"
+        state: present
+      with_items:
+        - { blueprint_name: "web_blueprint", inputs: { size: "small", environment: "production" } }
+        - { blueprint_name: "app_blueprint", inputs: { size: "medium", environment: "production" } }
