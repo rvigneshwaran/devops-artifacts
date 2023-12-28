@@ -1,0 +1,13 @@
+# Orchestrate Slack Notifications
+---
+- hosts: slack_integration
+  become: yes
+  tasks:
+    - name: Send Slack Notification
+      slack:
+        token: "{{ slack_token }}"
+        channel: "{{ item.channel }}"
+        msg: "{{ item.message }}"
+      with_items:
+        - { channel: "#web_team", message: "Web deployment is complete!" }
+        - { channel: "#app_team", message: "App deployment is complete!" }
