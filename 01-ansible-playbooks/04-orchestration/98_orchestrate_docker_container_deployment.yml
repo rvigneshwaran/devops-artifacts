@@ -1,0 +1,16 @@
+# Orchestrate Docker Container Deployment
+---
+- hosts: docker_host
+  become: yes
+  tasks:
+    - name: Deploy Docker Containers
+      docker_container:
+        name: "{{ item.container_name }}"
+        image: "{{ item.image }}"
+        state: started
+        ports:
+          - "80:80"
+          - "443:443"
+      with_items:
+        - { container_name: "web_container", image: "nginx:latest" }
+        - { container_name: "app_container", image: "httpd:latest" }
