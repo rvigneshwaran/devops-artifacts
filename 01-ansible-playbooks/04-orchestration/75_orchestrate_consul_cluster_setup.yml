@@ -1,0 +1,9 @@
+# Orchestrate HashiCorp Consul Cluster Setup
+---
+- hosts: consul_cluster
+  become: yes
+  tasks:
+    - name: Set Up HashiCorp Consul Cluster
+      include_role:
+        name: consul
+        tasks_from: cluster
