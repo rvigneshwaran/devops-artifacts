@@ -1,0 +1,18 @@
+# Orchestrate Arista EOS Switch Configurations
+---
+- hosts: eos_switches
+  become: yes
+  tasks:
+    - name: Configure Arista EOS Switch
+      eos_config:
+        host: "{{ item.host }}"
+        username: "{{ eos_username }}"
+        password: "{{ eos_password }}"
+        lines:
+          - "interface Ethernet1"
+          - "description Connected to Web Server"
+          - "switchport mode access"
+          - "switchport access vlan 10"
+      with_items:
+        - { host: "eos_switch1" }
+        - { host: "eos_switch2" }
