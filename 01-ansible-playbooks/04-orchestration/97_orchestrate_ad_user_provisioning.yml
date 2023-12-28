@@ -1,0 +1,13 @@
+# Orchestrate Microsoft Active Directory User Provisioning
+---
+- hosts: ad_controller
+  become: yes
+  tasks:
+    - name: Provision Active Directory Users
+      win_domain_user:
+        name: "{{ item.username }}"
+        password: "{{ item.password }}"
+        state: present
+      with_items:
+        - { username: "web_user", password: "web_password" }
+        - { username: "app_user", password: "app_password" }
