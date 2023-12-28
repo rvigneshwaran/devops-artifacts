@@ -1,0 +1,16 @@
+# Orchestrate CyberArk Vault Integration
+---
+- hosts: cyberark_integration
+  become: yes
+  tasks:
+    - name: Integrate with CyberArk Vault
+      cyberark_authentication:
+        vault_url: "{{ cyberark_vault_url }}"
+        application_id: "{{ cyberark_app_id }}"
+        safe_name: "{{ item.safe_name }}"
+        folder: "{{ item.folder }}"
+        object: "{{ item.object }}"
+        operation: "{{ item.operation }}"
+      with_items:
+        - { safe_name: "web_deployments", folder: "applications", object: "web_credentials", operation: "retrieve" }
+        - { safe_name: "app_deployments", folder: "applications", object: "app_credentials", operation: "retrieve" }
