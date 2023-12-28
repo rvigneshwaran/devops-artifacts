@@ -1,0 +1,13 @@
+# Orchestrate HashiCorp Vault Configuration
+---
+- hosts: vault_server
+  become: yes
+  tasks:
+    - name: Configure HashiCorp Vault
+      hashivault_generic_secret:
+        path: "{{ item.path }}"
+        secret: "{{ item.secret }}"
+        data: "{{ item.data }}"
+      with_items:
+        - { path: "web_secrets", secret: "db_credentials", data: { username: "web_user", password: "web_password" } }
+        - { path: "app_secrets", secret: "api_key", data: { key: "app_api_key" } }
