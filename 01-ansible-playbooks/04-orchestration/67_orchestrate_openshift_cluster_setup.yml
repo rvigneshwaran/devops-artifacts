@@ -1,0 +1,9 @@
+# Orchestrate Red Hat OpenShift Cluster Setup
+---
+- hosts: openshift_cluster
+  become: yes
+  tasks:
+    - name: Set Up OpenShift Cluster
+      include_role:
+        name: openshift
+        tasks_from: cluster
