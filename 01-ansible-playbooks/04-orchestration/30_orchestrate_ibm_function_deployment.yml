@@ -1,0 +1,15 @@
+# Orchestrate IBM Cloud Function Deployment
+---
+- hosts: ibm_function_controller
+  become: yes
+  tasks:
+    - name: Deploy IBM Cloud Function
+      ibmcloud_functions_action:
+        name: "{{ item.name }}"
+        namespace: "{{ item.namespace }}"
+        runtime: "{{ item.runtime }}"
+        code: "/path/to/local/ibm/{{ item.code }}"
+        state: present
+      with_items:
+        - { name: "web_function", namespace: "web_namespace", runtime: "python", code: "web_function.py" }
+        - { name: "app_function", namespace: "app_namespace", runtime: "nodejs", code: "app_function.js" }
