@@ -1,0 +1,20 @@
+# Orchestrate Google Cloud VM Instances
+---
+- hosts: localhost
+  tasks:
+    - name: Deploy GCP VM Instances
+      gcp_compute_instance:
+        name: "{{ item.name }}"
+        machine_type: "{{ item.machine_type }}"
+        image_family: "{{ item.image_family }}"
+        image_project: "{{ item.image_project }}"
+        zone: "{{ item.zone }}"
+        network_interfaces:
+          - network: "{{ item.network }}"
+            access_configs:
+              - name: "External NAT"
+                type: "ONE_TO_ONE_NAT"
+        state: present
+      with_items:
+        - { name: "web_instance", machine_type: "f1-micro", image_family: "ubuntu-1804-lts", image_project: "ubuntu-os-cloud", zone: "us-central1-a", network: "default" }
+        - { name: "app_instance", machine_type: "n1-standard-1", image_family: "debian-10", image_project: "debian-cloud", zone: "us-central1-b", network: "default" }
