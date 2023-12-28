@@ -1,0 +1,16 @@
+# Orchestrate HashiCorp Consul Connect Setup
+---
+- hosts: consul_connect
+  become: yes
+  tasks:
+    - name: Set Up Consul Connect
+      template:
+        src: /path/to/local/consul/connect_config.hcl.j2
+        dest: /etc/consul/connect_config.hcl
+      notify:
+        - restart consul_connect
+  handlers:
+    - name: restart consul_connect
+      service:
+        name: consul_connect
+        state: restarted
