@@ -1,0 +1,13 @@
+# Orchestrate HashiCorp Nomad Deployment
+---
+- hosts: nomad_server
+  become: yes
+  tasks:
+    - name: Deploy Nomad Jobs
+      nomad_job:
+        name: "{{ item.name }}"
+        job_spec: /path/to/local/nomad/{{ item.job_spec }}"
+        state: present
+      with_items:
+        - { name: "web_job", job_spec: "web_job.nomad" }
+        - { name: "app_job", job_spec: "app_job.nomad" }
