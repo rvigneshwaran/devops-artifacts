@@ -1,0 +1,19 @@
+# Orchestrate Google Kubernetes Engine (GKE) Cluster
+---
+- hosts: gke_cluster_controller
+  become: yes
+  tasks:
+    - name: Authenticate with Google Cloud
+      command: gcloud auth activate-service-account --key-file=/path/to/local/gke/gke_credentials.json
+    - name: Set Up GKE Cluster
+      k8s_cluster:
+        name: "{{ gke_cluster_name }}"
+        state: present
+        location: "{{ gke_cluster_location }}"
+        node_pools:
+          - name: "web-pool"
+            machine_type: "n1-standard-2"
+            initial_node_count: 2
+          - name: "app-pool"
+            machine_type: "n1-standard-4"
+            initial_node_count: 3
