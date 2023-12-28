@@ -1,0 +1,18 @@
+# Orchestrate F5 BIG-IP Configuration
+---
+- hosts: f5_bigip_controller
+  become: yes
+  tasks:
+    - name: Configure F5 BIG-IP Virtual Server
+      bigip_virtual_server:
+        server: "{{ item.server }}"
+        user: "{{ item.user }}"
+        password: "{{ item.password }}"
+        name: "{{ item.name }}"
+        destination: "{{ item.destination }}"
+        port: "{{ item.port }}"
+        pool: "{{ item.pool }}"
+        state: "{{ item.state }}"
+      with_items:
+        - { server: "bigip1", user: "admin", password: "admin123", name: "web_vs", destination: "10.0.0.1", port: "80", pool: "web_pool", state: "present" }
+        - { server: "bigip2", user: "admin", password: "admin123", name: "app_vs", destination: "10.0.0.2", port: "8080", pool: "app_pool", state: "present" }
