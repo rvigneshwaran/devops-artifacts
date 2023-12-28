@@ -1,0 +1,16 @@
+# Orchestrate OpenStack VMs
+---
+- hosts: localhost
+  tasks:
+    - name: Launch OpenStack VMs
+      os_server:
+        cloud: "{{ openstack_cloud }}"
+        state: present
+        name: "{{ item.name }}"
+        image: "{{ item.image }}"
+        flavor: "{{ item.flavor }}"
+        key_name: "{{ item.key_name }}"
+        network: "{{ item.network }}"
+      with_items:
+        - { name: "web_instance", image: "ubuntu-18.04", flavor: "m1.small", key_name: "my_key", network: "private_network" }
+        - { name: "app_instance", image: "centos-7", flavor: "m1.medium", key_name: "my_key", network: "private_network" }
