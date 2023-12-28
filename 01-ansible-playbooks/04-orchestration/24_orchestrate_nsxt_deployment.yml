@@ -1,0 +1,15 @@
+# Orchestrate VMware NSX-T Deployment
+---
+- hosts: nsxt_manager
+  become: yes
+  tasks:
+    - name: Deploy NSX-T Configuration
+      nsxt_policy:
+        hostname: "{{ nsxt_hostname }}"
+        username: "{{ nsxt_username }}"
+        password: "{{ nsxt_password }}"
+        deployment_type: "{{ item.deployment_type }}"
+        config_file: /path/to/local/nsxt/{{ item.config_file }}"
+      with_items:
+        - { deployment_type: "standalone", config_file: "nsxt_standalone_config.json" }
+        - { deployment_type: "clustered", config_file: "nsxt_clustered_config.json" }
