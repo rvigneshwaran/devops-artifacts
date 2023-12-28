@@ -1,0 +1,15 @@
+# Orchestrate IBM Cloud Object Storage (COS) Bucket Configuration
+---
+- hosts: ibm_cos_controller
+  become: yes
+  tasks:
+    - name: Configure IBM Cloud Object Storage (COS) Buckets
+      ibm_cos_bucket:
+        api_key: "{{ ibm_cos_api_key }}"
+        cos_instance_crn: "{{ ibm_cos_instance_crn }}"
+        endpoint: "{{ ibm_cos_endpoint }}"
+        name: "{{ item.bucket_name }}"
+        state: present
+      with_items:
+        - { bucket_name: "web-cos-bucket" }
+        - { bucket_name: "app-cos-bucket" }
