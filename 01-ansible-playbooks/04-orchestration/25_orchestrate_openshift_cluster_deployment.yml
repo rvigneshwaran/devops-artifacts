@@ -1,0 +1,7 @@
+# Orchestrate OpenShift Cluster Deployment
+---
+- hosts: openshift_master
+  become: yes
+  tasks:
+    - name: Deploy OpenShift Cluster
+      command: openshift-install create cluster --dir=/path/to/local/openshift --log-level=debug
