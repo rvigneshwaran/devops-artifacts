@@ -1,0 +1,16 @@
+# Set Up Check Point Firewall
+---
+- hosts: checkpoint_firewall
+  become: yes
+  tasks:
+    - name: Configure Check Point Firewall
+      template:
+        src: /path/to/local/checkpoint/firewall_config.conf.j2
+        dest: /etc/checkpoint/firewall_config.conf
+      notify:
+        - restart checkpoint_firewall
+  handlers:
+    - name: restart checkpoint_firewall
+      service:
+        name: checkpoint_firewall
+        state: restarted
