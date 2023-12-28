@@ -1,0 +1,16 @@
+#Orchestrate Check Point Firewall Objects Configuration
+---
+- hosts: checkpoint_firewall
+  become: yes
+  tasks:
+    - name: Configure Check Point Firewall Objects
+      community.checkpoint.mgmt_mgmt_host:
+        name: "{{ item.object_name }}"
+        ip_address: "{{ item.ip_address }}"
+        color: "{{ item.color }}"
+        comments: "{{ item.comments }}"
+        tags: "{{ item.tags }}"
+        state: "present"
+      with_items:
+        - { object_name: "web_server", ip_address: "10.0.1.10", color: "green", comments: "Web Server", tags: ["web", "server"] }
+        - { object_name: "app_server", ip_address: "10.1.1.20", color: "blue", comments: "App Server", tags: ["app", "server"] }
