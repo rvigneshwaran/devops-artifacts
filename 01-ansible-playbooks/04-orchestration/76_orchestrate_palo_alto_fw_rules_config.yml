@@ -1,0 +1,17 @@
+# Orchestrate Palo Alto Networks Firewall Rules Configuration
+---
+- hosts: palo_alto_firewall
+  become: yes
+  tasks:
+    - name: Configure Palo Alto Networks Firewall Rules
+      panos_security_policy:
+        provider: "{{ provider }}"
+        rule_name: "{{ item.rule_name }}"
+        source_zone: "{{ item.source_zone }}"
+        destination_zone: "{{ item.destination_zone }}"
+        source_ip: "{{ item.source_ip }}"
+        destination_ip: "{{ item.destination_ip }}"
+        action: "{{ item.action }}"
+      with_items:
+        - { rule_name: "web_to_app_rule", source_zone: "web_zone", destination_zone: "app_zone", source_ip: "10.0.1.0/24", destination_ip: "10.1.1.0/24", action: "allow" }
+        - { rule_name: "app_to_db_rule", source_zone: "app_zone", destination_zone: "db_zone", source_ip: "10.1.1.0/24", destination_ip: "10.2.2.0/24", action: "allow" }
