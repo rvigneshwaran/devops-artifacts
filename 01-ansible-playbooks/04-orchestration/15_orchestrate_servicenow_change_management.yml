@@ -1,0 +1,18 @@
+# Orchestrate ServiceNow Change Management
+---
+- hosts: servicenow_integration
+  become: yes
+  tasks:
+    - name: Create Change Request in ServiceNow
+      servicenow_cmdb_ci:
+        instance: "{{ servicenow_instance }}"
+        username: "{{ servicenow_username }}"
+        password: "{{ servicenow_password }}"
+        state: "{{ item.state }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        planned_start_date: "{{ item.planned_start_date }}"
+        planned_end_date: "{{ item.planned_end_date }}"
+      with_items:
+        - { state: "present", name: "Web Change Request", description: "Change for web deployment", planned_start_date: "2023-01-01", planned_end_date: "2023-01-02" }
+        - { state: "present", name: "App Change Request", description: "Change for app deployment", planned_start_date: "2023-01-03", planned_end_date: "2023-01-04" }
