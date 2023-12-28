@@ -1,0 +1,17 @@
+# Orchestrate VMware vSAN Cluster Configuration
+---
+- hosts: vsan_cluster
+  become: yes
+  tasks:
+    - name: Configure VMware vSAN Cluster
+      vmware_vmkernel:
+        hostname: "{{ vcenter_host }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        cluster_name: "{{ vsan_cluster }}"
+        vmkernel_interface: "{{ item.vmkernel_interface }}"
+        ip_address: "{{ item.ip_address }}"
+        subnet_mask: "{{ item.subnet_mask }}"
+      with_items:
+        - { vmkernel_interface: "vmk1", ip_address: "192.168.10.1", subnet_mask: "255.255.255.0" }
+        - { vmkernel_interface: "vmk2", ip_address: "192.168.20.1", subnet_mask: "255.255.255.0" }
