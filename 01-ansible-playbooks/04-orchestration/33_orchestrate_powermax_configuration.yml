@@ -1,0 +1,15 @@
+# Orchestrate Dell EMC PowerMax Storage Configuration
+---
+- hosts: powermax_storage
+  become: yes
+  tasks:
+    - name: Configure PowerMax Storage
+      powermax_storage_group:
+        array_id: "{{ powermax_array_id }}"
+        username: "{{ powermax_username }}"
+        password: "{{ powermax_password }}"
+        storage_group_name: "{{ item.storage_group_name }}"
+        state: "{{ item.state }}"
+      with_items:
+        - { storage_group_name: "web_storage_group", state: "present" }
+        - { storage_group_name: "app_storage_group", state: "present" }
