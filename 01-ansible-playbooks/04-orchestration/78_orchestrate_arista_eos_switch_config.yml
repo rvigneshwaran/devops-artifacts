@@ -1,0 +1,12 @@
+# Orchestrate Arista EOS Switch Configuration
+---
+- hosts: arista_eos_switch
+  become: yes
+  tasks:
+    - name: Configure Arista EOS Switch
+      eos_config:
+        lines:
+          - "interface Ethernet1"
+          - "description Web Server Interface"
+          - "ip address 10.0.1.1/24"
+      notify: save_config
