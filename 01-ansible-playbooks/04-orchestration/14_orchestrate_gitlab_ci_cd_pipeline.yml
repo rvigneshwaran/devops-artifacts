@@ -1,0 +1,15 @@
+# Orchestrate GitLab CI/CD Pipeline
+
+---
+- hosts: gitlab_runner
+  become: yes
+  tasks:
+    - name: Trigger GitLab CI/CD Pipeline
+      gitlab_pipeline:
+        url: "{{ gitlab_url }}"
+        token: "{{ gitlab_token }}"
+        project: "{{ item.project }}"
+        ref: "{{ item.ref }}"
+      with_items:
+        - { project: "web_project", ref: "master" }
+        - { project: "app_project", ref: "develop" }
