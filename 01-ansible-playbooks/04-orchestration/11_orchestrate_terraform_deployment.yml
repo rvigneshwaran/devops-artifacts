@@ -1,0 +1,9 @@
+# Orchestrate HashiCorp Terraform Deployment
+---
+- hosts: terraform_controller
+  become: yes
+  tasks:
+    - name: Run Terraform Deployment
+      command: terraform apply -auto-approve
+      args:
+        chdir: "/path/to/local/terraform/project"
