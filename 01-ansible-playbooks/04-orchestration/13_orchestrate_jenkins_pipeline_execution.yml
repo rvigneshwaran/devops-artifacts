@@ -1,0 +1,16 @@
+# Orchestrate Jenkins Pipeline Execution
+---
+- hosts: jenkins_master
+  become: yes
+  tasks:
+    - name: Trigger Jenkins Pipeline
+      jenkins_job:
+        url: "{{ jenkins_url }}"
+        user: "{{ jenkins_user }}"
+        password: "{{ jenkins_password }}"
+        name: "{{ item.pipeline_name }}"
+        params:
+          - BUILD_ENV=production
+      with_items:
+        - { pipeline_name: "web_pipeline" }
+        - { pipeline_name: "app_pipeline" }
