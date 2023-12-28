@@ -1,0 +1,12 @@
+# Orchestrate AWS ECS Cluster Deploymen
+---
+- hosts: aws_ecs_controller
+  become: yes
+  tasks:
+    - name: Deploy ECS Cluster
+      ecs_cluster:
+        name: "{{ item.cluster_name }}"
+        state: present
+      with_items:
+        - { cluster_name: "web_cluster" }
+        - { cluster_name: "app_cluster" }
