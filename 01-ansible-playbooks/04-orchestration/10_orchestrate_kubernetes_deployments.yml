@@ -1,0 +1,13 @@
+# Orchestrate Kubernetes Deployments
+---
+- hosts: kubernetes_master
+  become: yes
+  tasks:
+    - name: Deploy Kubernetes Deployments
+      k8s:
+        kubeconfig: "{{ kubeconfig_path }}"
+        definition: "{{ item.definition }}"
+        state: present
+      with_items:
+        - { definition: "/path/to/local/kubernetes/web_deployment.yaml" }
+        - { definition: "/path/to/local/kubernetes/app_deployment.yaml" }
