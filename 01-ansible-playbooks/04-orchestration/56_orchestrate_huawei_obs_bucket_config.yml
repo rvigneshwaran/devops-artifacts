@@ -1,0 +1,15 @@
+# Orchestrate Huawei Cloud OBS Bucket Configuration
+---
+- hosts: huawei_obs_controller
+  become: yes
+  tasks:
+    - name: Configure Huawei Cloud OBS Bucket
+      huaweicloud_obs_bucket:
+        ak: "{{ huawei_access_key }}"
+        sk: "{{ huawei_secret_key }}"
+        region: "{{ huawei_region }}"
+        bucket: "{{ item.bucket }}"
+        state: present
+      with_items:
+        - { bucket: "web_bucket" }
+        - { bucket: "app_bucket" }
