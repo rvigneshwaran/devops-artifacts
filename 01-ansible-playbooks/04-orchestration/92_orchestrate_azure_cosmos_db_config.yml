@@ -1,0 +1,16 @@
+# Orchestrate Microsoft Azure Cosmos DB Configuration
+---
+- hosts: azure_cosmos_db_controller
+  become: yes
+  tasks:
+    - name: Configure Azure Cosmos DB
+      azure_rm_cosmosdbcollection:
+        resource_group: "{{ resource_group }}"
+        account_name: "{{ cosmosdb_account_name }}"
+        database_name: "{{ item.database_name }}"
+        name: "{{ item.collection_name }}"
+        partition_key_path: "/{{ item.partition_key_path }}"
+        throughput: "{{ item.throughput }}"
+      with_items:
+        - { database_name: "web_db", collection_name: "web_collection", partition_key_path: "web_partition", throughput: 400 }
+        - { database_name: "app_db", collection_name: "app_collection", partition_key_path: "app_partition", throughput: 800 }
