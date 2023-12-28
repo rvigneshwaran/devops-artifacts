@@ -1,0 +1,22 @@
+# Orchestrate AWS Lambda Function Deployment
+---
+- hosts: aws_lambda_controller
+  become: yes
+  tasks:
+    - name: Deploy AWS Lambda Function
+      aws_lambda:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        name: "{{ item.function_name }}"
+        handler: "{{ item.handler }}"
+        runtime: "{{ item.runtime }}"
+        role: "{{ item.role }}"
+        function_timeout: "{{ item.timeout }}"
+        memory_size: "{{ item.memory }}"
+        code:
+          s3_bucket: "{{ item.s3_bucket }}"
+          s3_key: "{{ item.s3_key }}"
+        state: present
+      with_items:
+        - { function_name: "web_function", handler: "web_handler", runtime: "python3.8", role: "arn:aws:iam::123456789012:role/web_lambda_role", timeout: 30, memory: 128, s3_bucket: "web-function-code", s3_key: "web_function.zip" }
+        - { function_name: "app_function", handler: "app_handler", runtime: "nodejs14.x", role: "arn:aws:iam::123456789012:role/app_lambda_role", timeout: 60, memory: 256, s3_bucket: "app-function-code", s3_key: "app_function.zip" }
