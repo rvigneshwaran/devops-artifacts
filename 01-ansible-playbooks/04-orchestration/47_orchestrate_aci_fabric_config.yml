@@ -1,0 +1,17 @@
+# Orchestrate Cisco ACI Fabric Configuration
+---
+- hosts: aci_controller
+  become: yes
+  tasks:
+    - name: Configure Cisco ACI Fabric
+      aci_rest:
+        host: "{{ aci_host }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        path: "{{ item.path }}"
+        method: "{{ item.method }}"
+        content_type: "{{ item.content_type }}"
+        data: "{{ item.data | to_json }}"
+      with_items:
+        - { path: "/api/mo/uni/tn-web.json", method: "POST", content_type: "application/json", data: { "fvTenant": { "attributes": { "name": "web_tenant" } } } }
+        - { path: "/api/mo/uni/tn-app.json", method: "POST", content_type: "application/json", data: { "fvTenant": { "attributes": { "name": "app_tenant" } } } }
