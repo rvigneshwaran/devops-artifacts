@@ -1,0 +1,14 @@
+# Orchestrate Ansible Tower Job Launch
+---
+- hosts: ansible_tower
+  become: yes
+  tasks:
+    - name: Launch Ansible Tower Job
+      tower_job_launch:
+        tower_config_file: "/path/to/local/tower/tower_config.ini"
+        job_template: "{{ item.job_template }}"
+        job_tags: "{{ item.job_tags }}"
+        extra_vars: "{{ item.extra_vars }}"
+      with_items:
+        - { job_template: "web_deployment", job_tags: "web", extra_vars: "env=production" }
+        - { job_template: "app_deployment", job_tags: "app", extra_vars: "env=production" }
