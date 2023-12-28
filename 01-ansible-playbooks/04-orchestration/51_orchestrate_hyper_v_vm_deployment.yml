@@ -1,0 +1,10 @@
+# Orchestrate Microsoft Hyper-V VM Deployment
+---
+- hosts: hyper_v_host
+  become: yes
+  tasks:
+    - name: Deploy Hyper-V Virtual Machine
+      win_shell: New-VM -Name "{{ item.vm_name }}" -MemoryStartupBytes "{{ item.memory }}" -BootDevice VHD -VHDPath "{{ item.vhd_path }}" -SwitchName "{{ item.switch_name }}"
+      with_items:
+        - { vm_name: "web_vm", memory: "4GB", vhd_path: "C:\\VMs\\web_vm.vhdx", switch_name: "ExternalSwitch" }
+        - { vm_name: "app_vm", memory: "8GB", vhd_path: "C:\\VMs\\app_vm.vhdx", switch_name: "InternalSwitch" }
