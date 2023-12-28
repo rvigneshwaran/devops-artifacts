@@ -1,0 +1,17 @@
+# Orchestrate VMware Horizon VDI Deployment
+---
+- hosts: horizon_vdi_server
+  become: yes
+  tasks:
+    - name: Deploy VMware Horizon VDI
+      vmware_horizon_desktop:
+        server: "{{ horizon_server }}"
+        username: "{{ horizon_admin_user }}"
+        password: "{{ horizon_admin_password }}"
+        desktop_name: "{{ item.desktop_name }}"
+        pool_name: "{{ item.pool_name }}"
+        max_desktops: "{{ item.max_desktops }}"
+        protocol: "{{ item.protocol }}"
+      with_items:
+        - { desktop_name: "web_desktop", pool_name: "web_pool", max_desktops: 10, protocol: "PCoIP" }
+        - { desktop_name: "app_desktop", pool_name: "app_pool", max_desktops: 15, protocol: "Blast" }
