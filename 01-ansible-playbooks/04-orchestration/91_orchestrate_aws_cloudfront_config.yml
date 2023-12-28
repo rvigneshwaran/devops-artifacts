@@ -1,0 +1,20 @@
+# Orchestrate AWS CloudFront Distribution Configuration
+---
+- hosts: aws_cloudfront_controller
+  become: yes
+  tasks:
+    - name: Configure AWS CloudFront Distributions
+      aws_cloudfront_distribution:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        state: "{{ item.state }}"
+        alias: "{{ item.alias }}"
+        default_root_object: "{{ item.default_root_object }}"
+        origins:
+          - id: "{{ item.origin_id }}"
+            domain_name: "{{ item.origin_domain_name }}"
+            s3_origin_config:
+              origin_access_identity: "{{ item.origin_access_identity }}"
+      with_items:
+        - { state: "present", alias: "web.example.com", default_root_object: "index.html", origin_id: "web_origin", origin_domain_name: "web-s3-bucket.s3.amazonaws.com", origin_access_identity: "origin-access-identity/cloudfront/ABC123" }
+        - { state: "present", alias: "app.example.com", default_root_object: "index.html", origin_id: "app_origin", origin_domain_name: "app-s3-bucket.s3.amazonaws.com", origin_access_identity: "origin-access-identity/cloudfront/XYZ456" }
