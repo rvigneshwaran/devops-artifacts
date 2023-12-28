@@ -1,0 +1,14 @@
+# Orchestrate Microsoft Azure Logic Apps Configuration
+---
+- hosts: azure_logic_apps_controller
+  become: yes
+  tasks:
+    - name: Configure Azure Logic Apps
+      azure_rm_logicapp:
+        resource_group: "{{ resource_group }}"
+        name: "{{ item.logic_app_name }}"
+        location: "{{ azure_region }}"
+        definition: "{{ item.definition | to_json }}"
+      with_items:
+        - { logic_app_name: "web_logic_app", definition: { "definition": { "actions": [], "triggers": { "recurrence": { "frequency": "Hour", "interval": 2 } } } } } }
+        - { logic_app_name: "app_logic_app", definition: { "definition": { "actions": [], "triggers": { "manual": { } } } } }
