@@ -1,0 +1,19 @@
+# Orchestrate Alibaba Cloud ECS Deployment
+---
+- hosts: alibaba_cloud_ecs_controller
+  become: yes
+  tasks:
+    - name: Deploy Alibaba Cloud ECS Instances
+      alibabacloud_ecs:
+        access_key: "{{ alibaba_access_key }}"
+        secret_key: "{{ alibaba_secret_key }}"
+        region: "{{ alibaba_region }}"
+        instance_name: "{{ item.instance_name }}"
+        instance_type: "{{ item.instance_type }}"
+        image_id: "{{ item.image_id }}"
+        vswitch_id: "{{ alibaba_vswitch_id }}"
+        security_group_id: "{{ alibaba_sg_id }}"
+        count: "{{ item.count }}"
+      with_items:
+        - { instance_name: "web_instance", instance_type: "ecs.instance.small", image_id: "ecs.image.web", count: 2 }
+        - { instance_name: "app_instance", instance_type: "ecs.instance.medium", image_id: "ecs.image.app", count: 3 }
