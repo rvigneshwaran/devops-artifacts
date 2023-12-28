@@ -1,0 +1,15 @@
+# Orchestrate F5 BIG-IP Load Balancer Configuration
+---
+- hosts: f5_load_balancer
+  become: yes
+  tasks:
+    - name: Configure F5 BIG-IP Load Balancer
+      bigip_device:
+        host: "{{ f5_host }}"
+        user: "{{ f5_user }}"
+        password: "{{ f5_password }}"
+        module: sys
+        command: "{{ item.command }}"
+      with_items:
+        - { command: "config modify sys global-settings hostname web-lb.example.com" }
+        - { command: "save" }
