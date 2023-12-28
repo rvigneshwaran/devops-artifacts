@@ -1,0 +1,10 @@
+# Orchestrate HashiCorp Packer Image Build
+---
+- hosts: packer_builder
+  become: yes
+  tasks:
+    - name: Build Packer Image
+      command: packer build /path/to/local/packer/{{ item.packer_template }}
+      with_items:
+        - { packer_template: "web_image.json" }
+        - { packer_template: "app_image.json" }
