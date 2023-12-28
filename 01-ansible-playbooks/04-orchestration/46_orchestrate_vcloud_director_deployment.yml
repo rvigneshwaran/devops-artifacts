@@ -1,0 +1,15 @@
+# Orchestrate VMware vCloud Director Deployment
+---
+- hosts: vcloud_director_controller
+  become: yes
+  tasks:
+    - name: Deploy vCloud Director Organization
+      vcd_organization:
+        host: "{{ vcd_host }}"
+        username: "{{ vcd_username }}"
+        password: "{{ vcd_password }}"
+        org_name: "{{ item.org_name }}"
+        state: present
+      with_items:
+        - { org_name: "web_org" }
+        - { org_name: "app_org" }
