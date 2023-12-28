@@ -1,0 +1,9 @@
+# Orchestrate Rancher Kubernetes Engine (RKE) Cluster
+---
+- hosts: rke_cluster_controller
+  become: yes
+  tasks:
+    - name: Set Up RKE Cluster
+      command: rke up
+      args:
+        chdir: /path/to/local/rke
