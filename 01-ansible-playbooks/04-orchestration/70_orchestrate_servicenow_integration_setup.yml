@@ -1,0 +1,18 @@
+# Orchestrate ServiceNow Integration Setup
+---
+- hosts: servicenow_integration_server
+  become: yes
+  tasks:
+    - name: Set Up ServiceNow Integration
+      servicenow_record:
+        instance: "{{ servicenow_instance }}"
+        username: "{{ servicenow_username }}"
+        password: "{{ servicenow_password }}"
+        state: present
+        table: "{{ item.table }}"
+        data:
+          - { field: "web_field", value: "web_value" }
+          - { field: "app_field", value: "app_value" }
+      with_items:
+        - { table: "WebIncident" }
+        - { table: "AppChangeRequest" }
