@@ -1,0 +1,13 @@
+# Orchestrate Docker Containers
+---
+- hosts: docker_host
+  become: yes
+  tasks:
+    - name: Start Docker Containers
+      docker_container:
+        name: "{{ item.name }}"
+        image: "{{ item.image }}"
+        state: started
+      with_items:
+        - { name: "web_server", image: "nginx:latest" }
+        - { name: "app_server", image: "my/app:latest" }
