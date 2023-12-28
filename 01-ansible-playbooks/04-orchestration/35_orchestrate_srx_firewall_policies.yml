@@ -1,0 +1,16 @@
+# Orchestrate Juniper Networks SRX Firewall Policies
+---
+- hosts: srx_firewall
+  become: yes
+  tasks:
+    - name: Configure SRX Firewall Policies
+      junos_policy:
+        host: "{{ srx_host }}"
+        user: "{{ srx_username }}"
+        password: "{{ srx_password }}"
+        policy_name: "{{ item.policy_name }}"
+        policy_definition: "{{ item.policy_definition }}"
+        state: present
+      with_items:
+        - { policy_name: "web_to_app_policy", policy_definition: "from-zone web to-zone app { policy web-to-app { match { source-address any; destination-address any; application any; } then { permit; } } }" }
+        - { policy_name: "app_to_db_policy", policy_definition: "from-zone app to-zone db { policy app-to-db { match { source-address any; destination-address any; application any; } then { permit; } } }" }
