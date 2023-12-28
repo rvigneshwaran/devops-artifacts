@@ -1,0 +1,18 @@
+# Orchestrate Nutanix AHV VM Deployment
+---
+- hosts: nutanix_ahv_cluster
+  become: yes
+  tasks:
+    - name: Deploy Nutanix AHV VMs
+      nutanix_vm:
+        cluster_name: "{{ nutanix_cluster_name }}"
+        username: "{{ nutanix_username }}"
+        password: "{{ nutanix_password }}"
+        name: "{{ item.name }}"
+        memory_mb: "{{ item.memory_mb }}"
+        num_vcpus: "{{ item.num_vcpus }}"
+        disk_size_gb: "{{ item.disk_size_gb }}"
+        num_instances: "{{ item.num_instances }}"
+      with_items:
+        - { name: "web_vm", memory_mb: 4096, num_vcpus: 2, disk_size_gb: 100, num_instances: 2 }
+        - { name: "app_vm", memory_mb: 8192, num_vcpus: 4, disk_size_gb: 200, num_instances: 3 }
