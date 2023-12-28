@@ -1,0 +1,19 @@
+# Orchestrate VMware vSphere VM Snapshot Creation
+---
+- hosts: vsphere_host
+  become: yes
+  tasks:
+    - name: Create vSphere VM Snapshots
+      community.vmware.vmware_vm_vm_drs_vm_vm_vm_vm_snapshot:
+        hostname: "{{ vsphere_hostname }}"
+        username: "{{ vsphere_username }}"
+        password: "{{ vsphere_password }}"
+        cluster_name: "{{ vsphere_cluster_name }}"
+        datacenter_name: "{{ vsphere_datacenter_name }}"
+        validate_certs: no
+        folder: "{{ item.folder }}"
+        name: "{{ item.vm_name }}"
+        state: present
+      with_items:
+        - { folder: "web_vms", vm_name: "web_vm" }
+        - { folder: "app_vms", vm_name: "app_vm" }
