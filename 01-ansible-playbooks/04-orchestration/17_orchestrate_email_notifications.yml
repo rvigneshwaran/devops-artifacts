@@ -1,0 +1,17 @@
+# Orchestrate Email Notifications
+---
+- hosts: email_integration
+  become: yes
+  tasks:
+    - name: Send Email Notification
+      mail:
+        host: "{{ email_host }}"
+        port: "{{ email_port }}"
+        username: "{{ email_username }}"
+        password: "{{ email_password }}"
+        to: "{{ item.to }}"
+        subject: "{{ item.subject }}"
+        body: "{{ item.body }}"
+      with_items:
+        - { to: "web_team@example.com", subject: "Web Deployment Complete", body: "Web deployment has been successfully completed." }
+        - { to: "app_team@example.com", subject: "App Deployment Complete", body: "App deployment has been successfully completed." }
