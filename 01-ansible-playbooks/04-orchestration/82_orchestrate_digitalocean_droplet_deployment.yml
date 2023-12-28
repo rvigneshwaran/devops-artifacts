@@ -1,0 +1,17 @@
+# Orchestrate DigitalOcean Droplet Deployment:
+---
+- hosts: digitalocean_droplet_controller
+  become: yes
+  tasks:
+    - name: Deploy DigitalOcean Droplets
+      digital_ocean_droplet:
+        state: "present"
+        name: "{{ item.droplet_name }}"
+        region: "{{ digitalocean_region }}"
+        size: "{{ item.size }}"
+        image: "{{ item.image }}"
+        ssh_key_ids: "{{ digitalocean_ssh_key_ids }}"
+        monitoring: yes
+      with_items:
+        - { droplet_name: "web-droplet", size: "s-1vcpu-1gb", image: "ubuntu-20-04-x64" }
+        - { droplet_name: "app-droplet", size: "s-2vcpu-2gb", image: "centos-8-x64" }
