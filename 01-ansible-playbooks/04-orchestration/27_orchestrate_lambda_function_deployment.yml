@@ -1,0 +1,16 @@
+# Orchestrate AWS Lambda Function Deployment
+---
+- hosts: aws_lambda_controller
+  become: yes
+  tasks:
+    - name: Deploy AWS Lambda Function
+      aws_lambda:
+        name: "{{ item.name }}"
+        function_role: "{{ item.function_role }}"
+        runtime: "{{ item.runtime }}"
+        handler: "{{ item.handler }}"
+        zip_file: "/path/to/local/lambda/{{ item.zip_file }}"
+        state: present
+      with_items:
+        - { name: "web_function", function_role: "web_function_role", runtime: "python3.8", handler: "web_function.handler", zip_file: "web_function.zip" }
+        - { name: "app_function", function_role: "app_function_role", runtime: "nodejs14.x", handler: "app_function.handler", zip_file: "app_function.zip" }
