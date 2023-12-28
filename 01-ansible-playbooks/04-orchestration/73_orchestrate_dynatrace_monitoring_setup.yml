@@ -1,0 +1,18 @@
+# Orchestrate Dynatrace Monitoring Setup
+---
+- hosts: dynatrace_server
+  become: yes
+  tasks:
+    - name: Set Up Dynatrace Monitoring
+      dynatrace_alerting_profile:
+        tenant: "{{ dynatrace_tenant }}"
+        token: "{{ dynatrace_token }}"
+        profile_name: "{{ item.profile_name }}"
+        rules:
+          - name: "High CPU Usage"
+            threshold: 90
+            metric: "cpu.usage"
+            alert_type: "PERFORMANCE_EVENT"
+      with_items:
+        - { profile_name: "web_monitoring" }
+        - { profile_name: "app_monitoring" }
