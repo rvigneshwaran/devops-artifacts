@@ -1,0 +1,17 @@
+# Orchestrate Google Cloud SQL Database Setup
+---
+- hosts: gcp_sql_controller
+  become: yes
+  tasks:
+    - name: Set Up Google Cloud SQL Database
+      gcp_sql_database:
+        project: "{{ gcp_project }}"
+        auth_kind: "{{ gcp_auth_kind }}"
+        service_account_file: "{{ gcp_cred_file }}"
+        name: "{{ item.db_name }}"
+        instance: "{{ gcp_sql_instance }}"
+        collation: "{{ item.collation }}"
+        character_set: "{{ item.character_set }}"
+      with_items:
+        - { db_name: "web_db", collation: "utf8_general_ci", character_set: "utf8" }
+        - { db_name: "app_db", collation: "utf8mb4_general_ci", character_set: "utf8mb4" }
