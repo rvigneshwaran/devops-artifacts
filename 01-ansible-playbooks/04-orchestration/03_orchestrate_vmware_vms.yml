@@ -1,0 +1,18 @@
+# Orchestrate VMware VMs
+---
+- hosts: localhost
+  tasks:
+    - name: Deploy VMware VMs
+      vmware_guest:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        name: "{{ item.name }}"
+        template: "{{ item.template }}"
+        cluster: "{{ item.cluster }}"
+        folder: "{{ item.folder }}"
+        state: poweredon
+      with_items:
+        - { name: "web_vm", template: "WebTemplate", cluster: "Production", folder: "/Datacenter/VMs" }
+        - { name: "app_vm", template: "AppTemplate", cluster: "Production", folder: "/Datacenter/VMs" }
+
