@@ -1,0 +1,17 @@
+# Orchestrate Ruckus Wireless AP Configuration
+---
+- hosts: ruckus_wireless_controller
+  become: yes
+  tasks:
+    - name: Configure Ruckus Wireless Access Points
+      ruckus_wireless_ap:
+        controller_ip: "{{ ruckus_controller_ip }}"
+        controller_username: "{{ ruckus_controller_username }}"
+        controller_password: "{{ ruckus_controller_password }}"
+        ap_name: "{{ item.ap_name }}"
+        ssid: "{{ item.ssid }}"
+        security: "{{ item.security }}"
+        vlan: "{{ item.vlan }}"
+      with_items:
+        - { ap_name: "web_ap", ssid: "WebSSID", security: "WPA2-PSK", vlan: 10 }
+        - { ap_name: "app_ap", ssid: "AppSSID", security: "WPA2-PSK", vlan: 20 }
