@@ -1,0 +1,19 @@
+# Orchestrate IBM Cloud Virtual Server Deployment
+---
+- hosts: ibm_virtual_server_controller
+  become: yes
+  tasks:
+    - name: Deploy IBM Virtual Servers
+      ibm_cs_instance:
+        api_key: "{{ ibm_api_key }}"
+        instance_name: "{{ item.instance_name }}"
+        cpu: "{{ item.cpu }}"
+        memory: "{{ item.memory }}"
+        os_reference_code: "{{ item.os_reference_code }}"
+        datacenter: "{{ ibm_datacenter }}"
+        domain: "{{ ibm_domain }}"
+        hourly_billing: yes
+        state: present
+      with_items:
+        - { instance_name: "web_instance", cpu: 2, memory: 4, os_reference_code: "CENTOS_7_64", hourly_billing: yes }
+        - { instance_name: "app_instance", cpu: 4, memory: 8, os_reference_code: "UBUNTU_20_64", hourly_billing: yes }
