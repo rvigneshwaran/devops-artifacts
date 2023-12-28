@@ -1,0 +1,18 @@
+# Orchestrate Juniper Networks SRX Firewall Security Policies Configuration
+---
+- hosts: juniper_srx_firewall
+  become: yes
+  tasks:
+    - name: Configure Juniper SRX Firewall Security Policies
+      juniper_junos_security_policy:
+        provider: "{{ provider }}"
+        policy_name: "{{ item.policy_name }}"
+        from_zone: "{{ item.from_zone }}"
+        to_zone: "{{ item.to_zone }}"
+        source_address: "{{ item.source_address }}"
+        destination_address: "{{ item.destination_address }}"
+        application: "{{ item.application }}"
+        action: "{{ item.action }}"
+      with_items:
+        - { policy_name: "web_to_app_policy", from_zone: "web_zone", to_zone: "app_zone", source_address: "10.0.1.0/24", destination_address: "10.1.1.0/24", application: "HTTP", action: "permit" }
+        - { policy_name: "app_to_db_policy", from_zone: "app_zone", to_zone: "db_zone", source_address: "10.1.1.0/24", destination_address: "10.2.2.0/24", application: "HTTPS", action: "permit" }
