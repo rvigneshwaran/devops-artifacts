@@ -1,0 +1,13 @@
+# Orchestrate Apache Kafka Cluster Setup
+---
+- hosts: kafka_cluster
+  become: yes
+  tasks:
+    - name: Set Up Apache Kafka Cluster
+      community.general.kafka_topic:
+        name: "{{ item.topic_name }}"
+        zookeeper_connect: "{{ kafka_zookeeper_connect }}"
+        state: present
+      with_items:
+        - { topic_name: "web_logs" }
+        - { topic_name: "app_events" }
