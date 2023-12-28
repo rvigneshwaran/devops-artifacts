@@ -1,0 +1,14 @@
+# Orchestrate Google Cloud Function Deployment
+---
+- hosts: gcp_function_controller
+  become: yes
+  tasks:
+    - name: Deploy Google Cloud Function
+      gcp_function:
+        name: "{{ item.name }}"
+        runtime: "{{ item.runtime }}"
+        source_archive_url: "/path/to/local/gcp/{{ item.source_archive_url }}"
+        state: present
+      with_items:
+        - { name: "web_function", runtime: "python37", source_archive_url: "web_function.zip" }
+        - { name: "app_function", runtime: "nodejs14", source_archive_url: "app_function.zip" }
