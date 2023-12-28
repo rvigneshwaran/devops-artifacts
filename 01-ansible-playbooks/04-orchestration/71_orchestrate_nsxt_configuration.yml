@@ -1,0 +1,20 @@
+# Orchestrate VMware NSX-T Configuration
+---
+- hosts: nsxt_manager
+  become: yes
+  tasks:
+    - name: Configure VMware NSX-T
+      nsxt_policy_security_policy:
+        hostname: "{{ nsxt_manager_hostname }}"
+        username: "{{ nsxt_manager_username }}"
+        password: "{{ nsxt_manager_password }}"
+        policy_name: "{{ item.policy_name }}"
+        rules:
+          - name: "Allow Web to App"
+            source_groups: ["web_group"]
+            destination_groups: ["app_group"]
+            services: ["tcp/443"]
+            action: "ALLOW"
+      with_items:
+        - { policy_name: "web_to_app_policy" }
+        - { policy_name: "app_to_db_policy" }
