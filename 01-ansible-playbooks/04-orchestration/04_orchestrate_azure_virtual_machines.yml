@@ -1,0 +1,22 @@
+# Orchestrate Azure Virtual Machines
+---
+- hosts: localhost
+  tasks:
+    - name: Deploy Azure VMs
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group }}"
+        name: "{{ item.name }}"
+        image:
+          offer: "{{ item.offer }}"
+          publisher: "{{ item.publisher }}"
+          sku: "{{ item.sku }}"
+          version: "{{ item.version }}"
+        vm_size: "{{ item.vm_size }}"
+        admin_username: "{{ admin_username }}"
+        admin_password: "{{ admin_password }}"
+        network_interface_names:
+          - "{{ item.network_interface_name }}"
+        state: present
+      with_items:
+        - { name: "web_vm", offer: "UbuntuServer", publisher: "Canonical", sku: "18.04-LTS", version: "latest", vm_size: "Standard_B1s", network_interface_name: "web_nic" }
+        - { name: "app_vm", offer: "WindowsServer", publisher: "MicrosoftWindowsServer", sku: "2019-Datacenter", version: "latest", vm_size: "Standard_D2s_v3", network_interface_name: "app_nic" }
