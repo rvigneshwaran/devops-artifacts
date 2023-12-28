@@ -1,0 +1,16 @@
+# Orchestrate Cisco DNA Center Configuration
+---
+- hosts: dna_center_controller
+  become: yes
+  tasks:
+    - name: Configure Cisco DNA Center
+      ios_command:
+        commands:
+          - "configure terminal"
+          - "webhook receiver {{ item.receiver_name }}"
+          - "url {{ item.url }}"
+          - "app-path {{ item.app_path }}"
+          - "end"
+      with_items:
+        - { receiver_name: "web_receiver", url: "http://web-app/webhook", app_path: "/path/to/web/app" }
+        - { receiver_name: "app_receiver", url: "http://app-server/webhook", app_path: "/path/to/app" }
