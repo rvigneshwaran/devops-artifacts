@@ -1,0 +1,15 @@
+# Orchestrate Grafana Dashboard Configuration
+---
+- hosts: grafana_server
+  become: yes
+  tasks:
+    - name: Configure Grafana Dashboard
+      grafana_dashboard:
+        grafana_url: "{{ grafana_url }}"
+        grafana_user: "{{ grafana_user }}"
+        grafana_password: "{{ grafana_password }}"
+        dashboard_definition: "{{ lookup('file', 'path/to/local/grafana/{{ item.dashboard_name }}.json') }}"
+        state: present
+      with_items:
+        - { dashboard_name: "web_dashboard" }
+        - { dashboard_name: "app_dashboard" }
