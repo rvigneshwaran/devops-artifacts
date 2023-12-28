@@ -1,0 +1,8 @@
+# Orchestrate HashiCorp Vagrant Environment
+---
+- hosts: localhost
+  tasks:
+    - name: Provision Vagrant Environment
+      command: vagrant up --provision
+      args:
+        chdir: /path/to/local/vagrant
