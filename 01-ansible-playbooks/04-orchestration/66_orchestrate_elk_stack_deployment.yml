@@ -1,0 +1,9 @@
+# Orchestrate ELK Stack Deployment
+---
+- hosts: elk_stack_servers
+  become: yes
+  tasks:
+    - name: Deploy ELK Stack
+      include_role:
+        name: elastic.elasticsearch
+        tasks_from: package
