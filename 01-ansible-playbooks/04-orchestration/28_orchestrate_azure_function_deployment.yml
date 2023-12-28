@@ -1,0 +1,15 @@
+# Orchestrate Microsoft Azure Function Deployment
+---
+- hosts: azure_function_controller
+  become: yes
+  tasks:
+    - name: Deploy Azure Function
+      azure_rm_functionapp:
+        resource_group: "{{ resource_group }}"
+        name: "{{ item.name }}"
+        runtime: "{{ item.runtime }}"
+        package_url: "/path/to/local/azure/{{ item.package_url }}"
+        state: present
+      with_items:
+        - { name: "web_function", runtime: "Python", package_url: "web_function.zip" }
+        - { name: "app_function", runtime: "Node", package_url: "app_function.zip" }
