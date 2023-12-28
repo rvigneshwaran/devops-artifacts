@@ -1,0 +1,14 @@
+# Orchestrate Google Cloud SQL Database Configuration
+---
+- hosts: gcp_sql_db_controller
+  become: yes
+  tasks:
+    - name: Configure Google Cloud SQL Databases
+      gcp_sql_database:
+        name: "{{ item.db_name }}"
+        instance: "{{ item.db_instance }}"
+        charset: "{{ item.charset }}"
+        collation: "{{ item.collation }}"
+      with_items:
+        - { db_name: "web_db", db_instance: "web-db-instance", charset: "utf8", collation: "utf8_general_ci" }
+        - { db_name: "app_db", db_instance: "app-db-instance", charset: "utf8", collation: "utf8_general_ci" }
