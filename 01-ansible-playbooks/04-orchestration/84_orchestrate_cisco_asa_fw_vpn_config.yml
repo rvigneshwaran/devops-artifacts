@@ -1,0 +1,25 @@
+# Orchestrate Cisco ASA Firewall VPN Configuration
+---
+- hosts: cisco_asa_firewall
+  become: yes
+  tasks:
+    - name: Configure Cisco ASA Firewall VPN
+      ios_config:
+        lines:
+          - "crypto isakmp policy 10"
+          - "authentication pre-share"
+          - "encryption aes"
+          - "hash sha"
+          - "group 5"
+          - "lifetime 86400"
+          - "crypto ipsec transform-set ESP-AES-SHA esp-aes esp-sha-hmac"
+          - "crypto map outside_map 10 match address VPN-TRAFFIC"
+          - "crypto map outside_map 10 set pfs group5"
+          - "crypto map outside_map 10 set peer {{ item.peer_ip }}"
+          - "crypto map outside_map 10 set ikev1 transform-set ESP-AES-SHA"
+          - "tunnel-group {{ item.peer_ip }} type ipsec-l2l"
+          - "tunnel-group {{ item.peer_ip }} ipsec-attributes"
+          - "ikev1 pre-shared-key {{ item.shared_key }}"
+      with_items:
+        - { peer_ip: "10.0.1.1", shared_key: "web_shared_key" }
+        - { peer_ip: "10.1.1.1", shared_key: "app_shared_key" }
