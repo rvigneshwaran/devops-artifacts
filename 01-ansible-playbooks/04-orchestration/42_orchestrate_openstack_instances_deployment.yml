@@ -1,0 +1,24 @@
+# Orchestrate OpenStack Instances Deployment
+---
+- hosts: openstack_controller
+  become: yes
+  tasks:
+    - name: Deploy OpenStack Instances
+      openstack_server:
+        auth:
+          auth_url: "{{ openstack_auth_url }}"
+          username: "{{ openstack_username }}"
+          password: "{{ openstack_password }}"
+          project_name: "{{ openstack_project_name }}"
+          domain_name: "{{ openstack_domain_name }}"
+        state: present
+        name: "{{ item.name }}"
+        flavor: "{{ item.flavor }}"
+        image: "{{ item.image }}"
+        key_name: "{{ item.key_name }}"
+        network: "{{ item.network }}"
+        security_groups: "{{ item.security_groups }}"
+        count: "{{ item.count }}"
+      with_items:
+        - { name: "web_instance", flavor: "web_flavor", image: "web_image", key_name: "web_key", network: "web_network", security_groups: ["web_sg"], count: 2 }
+        - { name: "app_instance", flavor: "app_flavor", image: "app_image", key_name: "app_key", network: "app_network", security_groups: ["app_sg"], count: 3 }
