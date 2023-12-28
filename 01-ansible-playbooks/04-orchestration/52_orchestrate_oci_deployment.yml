@@ -1,0 +1,22 @@
+# Orchestrate Oracle Cloud Infrastructure (OCI) Deployment
+---
+- hosts: oci_controller
+  become: yes
+  tasks:
+    - name: Deploy OCI Instances
+      oci_instance:
+        api_key: "{{ oci_api_key }}"
+        tenancy_ocid: "{{ oci_tenancy_ocid }}"
+        user_ocid: "{{ oci_user_ocid }}"
+        fingerprint: "{{ oci_fingerprint }}"
+        private_key_path: "{{ oci_private_key_path }}"
+        region: "{{ oci_region }}"
+        compartment_ocid: "{{ oci_compartment_ocid }}"
+        instance_name: "{{ item.instance_name }}"
+        shape: "{{ item.shape }}"
+        image: "{{ item.image }}"
+        subnet_ocid: "{{ oci_subnet_ocid }}"
+        count: "{{ item.count }}"
+      with_items:
+        - { instance_name: "web_instance", shape: "VM.Standard2.1", image: "ocid1.image.web", count: 2 }
+        - { instance_name: "app_instance", shape: "VM.Standard2.2", image: "ocid1.image.app", count: 3 }
