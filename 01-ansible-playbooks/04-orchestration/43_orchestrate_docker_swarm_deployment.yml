@@ -1,0 +1,13 @@
+# Orchestrate Docker Swarm Deployment
+---
+- hosts: docker_swarm_manager
+  become: yes
+  tasks:
+    - name: Deploy Docker Swarm Stack
+      docker_swarm:
+        state: present
+        stack_name: "{{ item.stack_name }}"
+        compose_file: "/path/to/local/docker/{{ item.compose_file }}"
+      with_items:
+        - { stack_name: "web_stack", compose_file: "web_compose.yml" }
+        - { stack_name: "app_stack", compose_file: "app_compose.yml" }
