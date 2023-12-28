@@ -1,0 +1,16 @@
+# Orchestrate AWS S3 Bucket Configuration
+---
+- hosts: aws_s3_controller
+  become: yes
+  tasks:
+    - name: Configure AWS S3 Buckets
+      aws_s3_bucket:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        bucket: "{{ item.bucket_name }}"
+        region: "{{ aws_region }}"
+        acl: "{{ item.acl }}"
+        versioning: yes
+      with_items:
+        - { bucket_name: "web-s3-bucket", acl: "private" }
+        - { bucket_name: "app-s3-bucket", acl: "public-read" }
