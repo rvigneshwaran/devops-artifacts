@@ -1,0 +1,16 @@
+# Orchestrate Cisco ACI Policies
+---
+- hosts: cisco_aci_controller
+  become: yes
+  tasks:
+    - name: Deploy Cisco ACI Policies
+      aci_contract:
+        host: "{{ apic_host }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        tenant: "{{ item.tenant }}"
+        contract: "{{ item.contract }}"
+        state: "{{ item.state }}"
+      with_items:
+        - { tenant: "web_tenant", contract: "web_to_app_contract", state: "present" }
+        - { tenant: "app_tenant", contract: "app_to_db_contract", state: "present" }
