@@ -1,0 +1,12 @@
+# Orchestrate Service Mesh with Istio
+---
+- hosts: istio_control_plane
+  become: yes
+  tasks:
+    - name: Deploy Istio Service Mesh
+      istio_operator:
+        namespace: "{{ istio_namespace }}"
+        profile: "{{ item.profile }}"
+      with_items:
+        - { profile: "default" }
+        - { profile: "high-availability" }
