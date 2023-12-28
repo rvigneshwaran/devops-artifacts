@@ -1,0 +1,12 @@
+# Orchestrate Apache Kafka Topic Configuration
+---
+- hosts: kafka_controller
+  become: yes
+  tasks:
+    - name: Configure Apache Kafka Topics
+      kafka_topic:
+        name: "{{ item.topic_name }}"
+        state: present
+      with_items:
+        - { topic_name: "web_logs" }
+        - { topic_name: "app_events" }
