@@ -1,0 +1,16 @@
+# Orchestrate Dynatrace Monitoring Setup
+---
+- hosts: dynatrace_monitoring
+  become: yes
+  tasks:
+    - name: Configure Dynatrace Monitoring
+      template:
+        src: /path/to/local/dynatrace/dynatrace_config.yaml.j2
+        dest: /etc/dynatrace/dynatrace_config.yaml
+      notify:
+        - restart dynatrace_agent
+  handlers:
+    - name: restart dynatrace_agent
+      service:
+        name: dynatrace_agent
+        state: restarted
