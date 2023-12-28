@@ -1,0 +1,15 @@
+# Orchestrate NetApp ONTAP Cluster Setup
+---
+- hosts: ontap_cluster
+  become: yes
+  tasks:
+    - name: Set Up NetApp ONTAP Cluster
+      ontap_cluster:
+        cluster_address: "{{ ontap_cluster_address }}"
+        username: "{{ ontap_username }}"
+        password: "{{ ontap_password }}"
+        nodes: "{{ item.nodes }}"
+        state: present
+      with_items:
+        - { nodes: ["node1", "node2"] }
+        - { nodes: ["node3", "node4"] }
