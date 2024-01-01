@@ -1,0 +1,9 @@
+# Enable SELinux
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Enable SELinux
+      selinux:
+        policy: targeted
+        state: enforcing
