@@ -1,0 +1,14 @@
+# Configure Auditd for System Auditing
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install auditd
+      package:
+        name: auditd
+        state: present
+    - name: Configure auditd
+      template:
+        src: "auditd.conf.j2"
+        dest: "/etc/audit/auditd.conf"
+      notify: restart auditd
