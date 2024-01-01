@@ -1,0 +1,13 @@
+# Implement Filesystem Encryption with LUKS
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install LUKS
+      package:
+        name: cryptsetup
+        state: present
+    - name: Create encrypted filesystem
+      command: "cryptsetup luksFormat --type luks2 /dev/sdb"
+    - name: Open encrypted filesystem
+      command: "cryptsetup open /dev/sdb encrypted_data"
