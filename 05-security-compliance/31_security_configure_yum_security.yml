@@ -1,0 +1,9 @@
+# Configure YUM Repository Security
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Set YUM repository security
+      template:
+        src: "yum_security.conf.j2"
+        dest: "/etc/yum/pluginconf.d/security.conf"
