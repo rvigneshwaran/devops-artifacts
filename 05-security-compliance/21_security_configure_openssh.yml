@@ -1,0 +1,10 @@
+# Configure OpenSSH Server Security
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure OpenSSH Server
+      template:
+        src: "sshd_config.j2"
+        dest: "/etc/ssh/sshd_config"
+      notify: restart sshd
