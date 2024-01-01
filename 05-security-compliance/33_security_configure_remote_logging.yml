@@ -1,0 +1,10 @@
+# Configure Remote Logging with Syslog
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure remote syslog server
+      lineinfile:
+        path: "/etc/rsyslog.conf"
+        line: "*.* @@{{ syslog_server }}:514"
+      notify: restart rsyslog
