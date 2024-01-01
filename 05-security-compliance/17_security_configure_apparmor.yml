@@ -1,0 +1,13 @@
+# Configure AppArmor Profiles
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install AppArmor
+      package:
+        name: apparmor
+        state: present
+    - name: Configure AppArmor profile for Apache
+      apparmor_profile:
+        name: apache2
+        profile: enforce
