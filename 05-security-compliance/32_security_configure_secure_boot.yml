@@ -1,0 +1,13 @@
+# Configure Secure Boot
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install UEFI tools
+      package:
+        name: efibootmgr
+        state: present
+    - name: Configure secure boot
+      command: "efibootmgr -o {{ item.boot_order }}"
+      with_items:
+        - { boot_order: "0001,0000" }
