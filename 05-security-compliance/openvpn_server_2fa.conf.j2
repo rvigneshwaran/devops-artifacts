@@ -1,0 +1,6 @@
+# Example OpenVPN server configuration file with Two-Factor Authentication (2FA)
+port 1194
+proto udp
+dev tun
+server 10.8.0.0 255.255.255.0
+plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so openvpn
