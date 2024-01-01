@@ -1,0 +1,14 @@
+# Install and Configure Fail2Ban
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Fail2Ban
+      package:
+        name: fail2ban
+        state: present
+    - name: Configure Fail2Ban
+      template:
+        src: "jail.conf.j2"
+        dest: "/etc/fail2ban/jail.local"
+      notify: restart fail2ban
