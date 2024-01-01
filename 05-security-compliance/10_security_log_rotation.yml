@@ -1,0 +1,9 @@
+# Configure Log Rotation
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure log rotation for syslog
+      template:
+        src: "logrotate.conf.j2"
+        dest: "/etc/logrotate.d/syslog"
