@@ -1,0 +1,14 @@
+# Install and Configure OSSEC (Open Source Host-based Intrusion Detection System)
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install OSSEC
+      command: "curl -s https://www.ossec.net/files/ossec-hids-{{ ossec_version }}.tar.gz | tar -xz"
+      args:
+        chdir: "/tmp"
+    - name: Configure and Install OSSEC
+      command: "./install.sh"
+      args:
+        chdir: "/tmp/ossec-hids-{{ ossec_version }}"
+      notify: restart ossec
