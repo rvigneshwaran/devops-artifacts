@@ -1,0 +1,12 @@
+# Configure Kernel Modules
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Disable unwanted kernel modules
+      modprobe:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - "usb_storage"
+        - "cramfs"
