@@ -1,0 +1,13 @@
+# Configure Application Whitelisting
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install AppArmor
+      package:
+        name: apparmor
+        state: present
+    - name: Configure AppArmor profile for allowed applications
+      apparmor_profile:
+        name: allowed_app
+        profile: enforce
