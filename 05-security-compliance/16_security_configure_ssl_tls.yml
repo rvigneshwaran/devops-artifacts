@@ -1,0 +1,17 @@
+# Configure SSL/TLS Certificates for Web Servers
+---
+- hosts: web_servers
+  become: yes
+  tasks:
+    - name: Install OpenSSL
+      package:
+        name: openssl
+        state: present
+    - name: Generate SSL/TLS key and certificate
+      openssl_certificate:
+        path: "/etc/ssl/certs/{{ item.server_name }}.crt"
+        privatekey_path: "/etc/ssl/private/{{ item.server_name }}.key"
+        common_name: "{{ item.server_name }}"
+      with_items:
+        - { server_name: "web.example.com" }
+        - { server_name: "app.example.com" }
