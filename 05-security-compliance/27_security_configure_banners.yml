@@ -1,0 +1,14 @@
+# Configure Security Banners
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure login banner
+      template:
+        src: "login_banner.j2"
+        dest: "/etc/issue.net"
+    - name: Configure SSH banner
+      template:
+        src: "sshd_banner.j2"
+        dest: "/etc/ssh/sshd_banner"
+      notify: restart sshd
