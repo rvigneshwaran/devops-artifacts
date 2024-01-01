@@ -1,0 +1,9 @@
+# Configure USB Device Policies
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Disable USB storage
+      modprobe:
+        name: usb_storage
+        state: absent
