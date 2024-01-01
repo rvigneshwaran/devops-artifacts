@@ -1,0 +1,9 @@
+# Configure Session Timeout for Inactivity
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure session timeout for inactivity
+      template:
+        src: "profile.j2"
+        dest: "/etc/profile"
