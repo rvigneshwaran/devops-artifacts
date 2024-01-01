@@ -1,0 +1,9 @@
+# Configure Firewall Rules
+---
+- hosts: web_servers
+  become: yes
+  tasks:
+    - name: Allow HTTP traffic
+      firewalld:
+        service: http
+        state: enabled
