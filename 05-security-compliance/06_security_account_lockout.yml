@@ -1,0 +1,11 @@
+# Configure User Account Lockout Policy
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure account lockout policy
+      pam_tally2:
+        file: /var/log/tallylog
+        deny: 3
+        unlock_time: 600
+        even_deny_root: yes
