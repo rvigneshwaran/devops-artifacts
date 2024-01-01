@@ -1,0 +1,9 @@
+# Create Rollback Script
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Create Rollback Script
+      template:
+        src: "rollback.sh.j2"
+        dest: "/opt/app/rollback.sh"

@@ -1,0 +1,8 @@
+# Configure Automated Testing
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Automated Testing
+      script:
+        script: "/opt/app/run_tests.sh"

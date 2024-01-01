@@ -1,0 +1,17 @@
+# Build and Push Docker Image
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Build and Push Docker Image
+      docker_image:
+        name: "my_app"
+        build:
+          path: "/opt/app"
+        push: yes
+      notify: restart docker
+  handlers:
+    - name: restart docker
+      service:
+        name: docker
+        state: restarted

@@ -1,0 +1,11 @@
+# Configure CD Dashboard with Grafana
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure CD Dashboard with Grafana
+      grafana_dashboard:
+        grafana_url: "http://grafana-server:3000"
+        grafana_user: "admin"
+        grafana_password: "admin"
+        dashboard_src: "{{ lookup('file', 'cd_dashboard.json') }}"

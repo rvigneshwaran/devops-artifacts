@@ -1,0 +1,12 @@
+# Deploy Docker Container
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Deploy Docker Container
+      docker_container:
+        name: "my_app_container"
+        image: "my_app:latest"
+        state: started
+        ports:
+          - "8080:80"

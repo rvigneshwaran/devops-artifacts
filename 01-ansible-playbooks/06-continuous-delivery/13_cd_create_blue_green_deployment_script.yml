@@ -1,0 +1,9 @@
+# Create Blue-Green Deployment Script
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Create Blue-Green Deployment Script
+      template:
+        src: "blue_green_deployment.sh.j2"
+        dest: "/opt/app/blue_green_deployment.sh"

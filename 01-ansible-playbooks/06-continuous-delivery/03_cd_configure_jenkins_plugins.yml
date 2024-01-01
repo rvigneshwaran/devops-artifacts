@@ -1,0 +1,12 @@
+# Configure Jenkins Plugins
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Install Jenkins Plugins
+      jenkins_plugin:
+        name: "{{ item }}"
+      with_items:
+        - git
+        - docker
+        - pipeline

@@ -1,0 +1,9 @@
+# Create Jenkins Pipeline Job
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Create Jenkins Pipeline Job
+      jenkins_job:
+        name: my_pipeline_job
+        config: "{{ lookup('file', 'pipeline_job_config.xml') }}"

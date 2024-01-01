@@ -1,0 +1,10 @@
+# Configure Slack Notification for Deployment
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Slack Notification for Deployment
+      slack:
+        token: "your_slack_token"
+        channel: "#deployment-notifications"
+        msg: "Deployment successful!"

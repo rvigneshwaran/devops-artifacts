@@ -1,0 +1,8 @@
+# Configure SonarQube Scanner in Jenkins
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure SonarQube Scanner in Jenkins
+      jenkins_script:
+        script: "{{ lookup('file', 'configure_sonarqube_scanner.groovy') }}"

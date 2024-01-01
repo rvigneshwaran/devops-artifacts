@@ -1,0 +1,15 @@
+# Install Jenkins
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+      notify: restart jenkins
+  handlers:
+    - name: restart jenkins
+      service:
+        name: jenkins
+        state: restarted

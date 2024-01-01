@@ -1,0 +1,9 @@
+# Configure Canary Deployment
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Canary Deployment
+      template:
+        src: "canary_deployment_config.yml.j2"
+        dest: "/opt/app/canary_deployment_config.yml"

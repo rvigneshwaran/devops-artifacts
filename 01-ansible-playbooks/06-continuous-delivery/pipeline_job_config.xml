@@ -1,0 +1,6 @@
+<!-- Example Jenkins Pipeline Job configuration -->
+<flow-definition>
+  ...
+  <!-- Define pipeline script here -->
+  ...
+</flow-definition>

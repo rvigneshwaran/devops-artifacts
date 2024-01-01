@@ -1,0 +1,15 @@
+# Install and Configure Nexus Repository Manager
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Install Nexus Repository Manager
+      nexus3_repository:
+        name: "nexus"
+        state: present
+      notify: restart nexus
+  handlers:
+    - name: restart nexus
+      service:
+        name: nexus
+        state: restarted

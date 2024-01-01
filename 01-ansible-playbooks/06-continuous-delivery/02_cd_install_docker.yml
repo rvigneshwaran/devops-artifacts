@@ -1,0 +1,15 @@
+# Install Docker
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+      notify: restart docker
+  handlers:
+    - name: restart docker
+      service:
+        name: docker
+        state: restarted

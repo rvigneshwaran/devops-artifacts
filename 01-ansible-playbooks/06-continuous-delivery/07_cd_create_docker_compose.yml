@@ -1,0 +1,9 @@
+# Create Docker Compose File for Application
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Create Docker Compose File
+      template:
+        src: "docker-compose.yml.j2"
+        dest: "/opt/app/docker-compose.yml"

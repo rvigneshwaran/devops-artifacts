@@ -1,0 +1,14 @@
+# Configure Email Notification for Deployment
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Email Notification for Deployment
+      mail:
+        host: "smtp.example.com"
+        port: 587
+        username: "your_username"
+        password: "your_password"
+        to: "deployment@example.com"
+        subject: "Deployment Notification"
+        body: "Deployment successful!"

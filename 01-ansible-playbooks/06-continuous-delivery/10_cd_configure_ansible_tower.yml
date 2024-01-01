@@ -1,0 +1,10 @@
+# Configure Ansible Tower for Continuous Deployment
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Ansible Tower for Continuous Deployment
+      tower_job_template:
+        name: "my_cd_template"
+        project: "my_ansible_project"
+        playbook: "deploy.yml"

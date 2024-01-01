@@ -1,0 +1,16 @@
+# Install and Configure SonarQube
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Install SonarQube
+      community.general.sonarqube_plugin:
+        login: admin
+        password: admin
+        url: "http://sonarqube-server:9000"
+      notify: restart sonarqube
+  handlers:
+    - name: restart sonarqube
+      service:
+        name: sonarqube
+        state: restarted

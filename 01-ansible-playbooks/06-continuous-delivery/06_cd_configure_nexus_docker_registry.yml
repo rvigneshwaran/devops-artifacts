@@ -1,0 +1,10 @@
+# Configure Docker Registry in Nexus
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Docker Registry in Nexus
+      nexus3_docker:
+        name: "docker-registry"
+        repository: "docker"
+        state: present

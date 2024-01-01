@@ -1,0 +1,14 @@
+# Configure Health Checks for Deployment
+---
+- hosts: cd_servers
+  become: yes
+  tasks:
+    - name: Configure Health Checks for Deployment
+      uri:
+        url: "http://localhost:8080/health"
+        return_content: yes
+      register: health_check
+    - name: Fail the deployment if health check fails
+      fail:
+        msg: "Health check failed: {{ health_check.content }}"
+      when: health_check.status != 200
