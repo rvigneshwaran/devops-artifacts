@@ -1,0 +1,14 @@
+# Configure IPsec VPN
+---
+- hosts: vpn_servers
+  become: yes
+  tasks:
+    - name: Install StrongSwan
+      package:
+        name: strongswan
+        state: present
+    - name: Configure IPsec VPN
+      template:
+        src: "ipsec.conf.j2"
+        dest: "/etc/ipsec.conf"
+      notify: restart strongswan
