@@ -1,0 +1,14 @@
+# Configure Encrypted Database Communication (MySQL)
+---
+- hosts: db_servers
+  become: yes
+  tasks:
+    - name: Install MySQL server
+      package:
+        name: mysql-server
+        state: present
+    - name: Configure encrypted database communication
+      template:
+        src: "mysql.cnf.j2"
+        dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
+      notify: restart mysql
