@@ -1,0 +1,9 @@
+# Enable and Configure AIDE Periodic Checks
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Enable AIDE periodic checks
+      lineinfile:
+        path: "/etc/cron.d/aide"
+        line: "0 3 * * * root /usr/sbin/aide --check"
