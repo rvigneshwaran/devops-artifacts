@@ -1,0 +1,19 @@
+# Install and Configure AIDE (Advanced Intrusion Detection Environment)
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install AIDE
+      package:
+        name: aide
+        state: present
+    - name: Configure AIDE
+      template:
+        src: "aide.conf.j2"
+        dest: "/etc/aide.conf"
+    - name: Initialize AIDE database
+      command: aideinit
+    - name: Schedule periodic AIDE check
+      cron:
+        name: Run AIDE check
+        job: "0 3 * * * /usr/sbin/aide --check"
