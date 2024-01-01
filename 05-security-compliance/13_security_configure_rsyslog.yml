@@ -1,0 +1,14 @@
+# Configure Centralized Logging with rsyslog
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install rsyslog
+      package:
+        name: rsyslog
+        state: present
+    - name: Configure rsyslog
+      template:
+        src: "rsyslog.conf.j2"
+        dest: "/etc/rsyslog.conf"
+      notify: restart rsyslog
