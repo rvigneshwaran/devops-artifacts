@@ -1,0 +1,11 @@
+# Configure Encrypted Email Communication (OpenPGP)
+---
+- hosts: email_servers
+  become: yes
+  tasks:
+    - name: Install GnuPG
+      package:
+        name: gnupg
+        state: present
+    - name: Configure OpenPGP for email communication
+      command: "gpg --gen-key"
