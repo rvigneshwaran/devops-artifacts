@@ -1,0 +1,10 @@
+# Configure Encrypted DNS (DNS over TLS)
+---
+- hosts: dns_servers
+  become: yes
+  tasks:
+    - name: Install and configure DNS over TLS (Bind9)
+      template:
+        src: "bind9_options.j2"
+        dest: "/etc/bind/named.conf.options"
+      notify: restart bind9
