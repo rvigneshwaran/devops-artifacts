@@ -1,0 +1,12 @@
+# Set File Permissions and Ownership
+---
+- hosts: web_servers
+  become: yes
+  tasks:
+    - name: Set permissions and ownership for /var/www/html
+      file:
+        path: /var/www/html
+        state: directory
+        owner: apache
+        group: apache
+        mode: 0755
