@@ -1,0 +1,14 @@
+# Implement Network Time Protocol (NTP) Configuration
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install NTP
+      package:
+        name: ntp
+        state: present
+    - name: Configure NTP servers
+      lineinfile:
+        path: "/etc/ntp.conf"
+        line: "server time.example.com iburst"
+      notify: restart ntp
