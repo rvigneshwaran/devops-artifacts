@@ -1,0 +1,10 @@
+# Configure Encrypted Chat Communication (XMPP with OMEMO)
+---
+- hosts: chat_servers
+  become: yes
+  tasks:
+    - name: Install and configure XMPP server with OMEMO
+      template:
+        src: "ejabberd.yml.j2"
+        dest: "/etc/ejabberd/ejabberd.yml"
+      notify: restart ejabberd
