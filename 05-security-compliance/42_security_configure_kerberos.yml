@@ -1,0 +1,13 @@
+# Configure Centralized User Authentication with Kerberos
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Kerberos client
+      package:
+        name: krb5-user
+        state: present
+    - name: Configure Kerberos
+      template:
+        src: "krb5.conf.j2"
+        dest: "/etc/krb5.conf"
