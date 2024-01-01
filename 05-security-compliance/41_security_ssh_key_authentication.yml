@@ -1,0 +1,12 @@
+# Configure SSH Key-Based Authentication
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure SSH key-based authentication
+      authorized_key:
+        user: "{{ item.username }}"
+        key: "{{ item.ssh_key }}"
+      with_items:
+        - { username: "web_user", ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD..." }
+        - { username: "app_user", ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD..." }
