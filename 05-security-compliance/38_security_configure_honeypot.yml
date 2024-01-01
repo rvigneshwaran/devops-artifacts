@@ -1,0 +1,14 @@
+# Implement Honeypot for Intrusion Detection
+---
+- hosts: honeypot_servers
+  become: yes
+  tasks:
+    - name: Install and configure Honeyd
+      package:
+        name: honeyd
+        state: present
+    - name: Configure Honeyd
+      template:
+        src: "honeyd.conf.j2"
+        dest: "/etc/honeyd.conf"
+      notify: restart honeyd
