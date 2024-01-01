@@ -1,0 +1,13 @@
+# Configure Centralized Authentication (LDAP)
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install LDAP client
+      package:
+        name: ldap-utils
+        state: present
+    - name: Configure LDAP client
+      template:
+        src: "ldap.conf.j2"
+        dest: "/etc/ldap/ldap.conf"
