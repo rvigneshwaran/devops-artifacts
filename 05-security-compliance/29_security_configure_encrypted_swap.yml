@@ -1,0 +1,7 @@
+# Configure Encrypted Swap
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure encrypted swap
+      command: "dd if=/dev/urandom of=/dev/mapper/swap bs=1M count=256"
