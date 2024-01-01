@@ -1,0 +1,29 @@
+worker_processes 1;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream web_servers {
+        server 10.0.1.5;
+        server 10.0.1.6;
+    }
+
+    upstream app_servers {
+        server 10.1.1.10;
+        server 10.1.1.11;
+    }
+
+    server {
+        listen 80;
+
+        location /web {
+            proxy_pass http://web_servers;
+        }
+
+        location /app {
+            proxy_pass http://app_servers;
+        }
+    }
+}
