@@ -1,0 +1,14 @@
+# Implement Web Application Firewall (WAF)
+---
+- hosts: web_servers
+  become: yes
+  tasks:
+    - name: Install and configure ModSecurity
+      package:
+        name: mod_security
+        state: present
+    - name: Configure ModSecurity
+      template:
+        src: "modsecurity.conf.j2"
+        dest: "/etc/modsecurity/modsecurity.conf"
+      notify: restart apache2
