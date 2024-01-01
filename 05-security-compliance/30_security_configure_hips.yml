@@ -1,0 +1,7 @@
+# Implement Host-Based Intrusion Prevention System (HIPS)
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install and configure OSSEC HIPS
+      command: "ossec-control enable hips"
