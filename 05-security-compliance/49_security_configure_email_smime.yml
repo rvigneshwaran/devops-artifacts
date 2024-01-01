@@ -1,0 +1,13 @@
+---
+- hosts: email_servers
+  become: yes
+  tasks:
+    - name: Install OpenSSL and mail server
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openssl
+        - postfix
+    - name: Configure email encryption (S/MIME)
+      command: "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/mail.key -out /etc/ssl/certs/mail.crt"

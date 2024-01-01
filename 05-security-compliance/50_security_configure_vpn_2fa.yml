@@ -1,0 +1,17 @@
+# Configure VPN with Two-Factor Authentication (2FA)
+---
+- hosts: vpn_servers
+  become: yes
+  tasks:
+    - name: Install OpenVPN and Two-Factor Authentication (2FA)
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openvpn
+        - libpam-google-authenticator
+    - name: Configure OpenVPN with 2FA
+      template:
+        src: "openvpn_server_2fa.conf.j2"
+        dest: "/etc/openvpn/server.conf"
+      notify: restart openvpn
