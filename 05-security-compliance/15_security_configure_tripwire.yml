@@ -1,0 +1,11 @@
+# Implement File Integrity Checking with Tripwire
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Tripwire
+      package:
+        name: tripwire
+        state: present
+    - name: Initialize Tripwire
+      command: "tripwire --init"
