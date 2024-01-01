@@ -1,0 +1,9 @@
+# Configure sudo Access
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Configure sudo access for admins
+      lineinfile:
+        path: "/etc/sudoers"
+        line: "%admins ALL=(ALL) ALL"
